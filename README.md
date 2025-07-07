@@ -1,4 +1,4 @@
-# 🤖 Mini-bot (Python Bot)
+# 🤖 Budgets-bot (Python Bot)
 
 Este projeto tem como objetivo criar um chatbot inteligente que recebe mensagens via **Telegram** ou **WhatsApp**, interpreta automaticamente os dados enviados por um vendedor em campo (como tipo de serviço, materiais, metragem, etc.), e retorna um **orçamento em PDF** formatado, pronto para ser enviado ao cliente.
 
