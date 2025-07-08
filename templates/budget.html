@@ -31,100 +31,71 @@
       background-color: #e6f0ff;
       padding: 6px;
       font-weight: bold;
-      margin-top: 30px;
+      
     }
     .total {
       font-size: 16px;
       font-weight: bold;
       text-align: right;
-      margin-top: 20px;
+      
     }
   </style>
 </head>
 <body>
 
   <h1>Orçamento de Perfuração de Poço</h1>
-  <h2>MAC POÇOS</h2>
-
-  <!-- <ul id="budget-list">
-
-  </ul> -->
 
   <p><strong>Cliente:</strong> <span id="cliente-nome"></span><br>
   <strong>Local:</strong><span id="cliente-local"></span></p>
 
+  <table id="prospeccao-tabela">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Descrição</th>
+      <th>Quantidade</th>
+      <th>Valor (R$)</th>
+      <th>Valor  Total(R$)</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+  </tbody>
+</table>
   <div class="section-title">Prospecção</div>
-  <ul id="listagem">
-   </ul>
+  <table id="prospeccao">
+  <tbody>
+    
+  </tbody>
+</table>
 
   <div class="section-title">Perfuração</div>
-  <table>
-    <tr><th>Item</th><th>Quantidade</th><th>Valor Unitário</th><th>Total</th></tr>
-    <tr id="perfuração">
-       <td>Perfuração</td>
-      <!-- <td>{{ perfuração.metros_perfuração }} m</td>
-      <td>R$ {{ perfuração.preco_por_metro }}</td>
-      <td>R$ {{ perfuração.metros_perfuração * perfuração.preco_por_metro }}</td> --> 
-    </tr>
-    <!-- {% if perfuração.uso_martelo_fundo %}
-    <tr><td colspan="4">* Inclui uso de Martelo de Fundo (DTH)</td></tr>
-    {% endif %} -->
-  </table>
+  <table id="Mads">
+  <tbody>
+    <!-- Linhas serão inseridas aqui pelo JS -->
+  </tbody>
+</table>
 
   <div class="section-title">Tubulação e Estrutura</div>
-  
-  <table>
-    <tr><th>Polegadas</th><th>Quantidade</th><th>Valor Unitário</th><th>Total</th></tr>
-    <tr id="estrutura">
-       
-      <!-- <td>{{ perfuração.metros_perfuração }} m</td>
-      <td>R$ {{ perfuração.preco_por_metro }}</td>
-      <td>R$ {{ perfuração.metros_perfuração * perfuração.preco_por_metro }}</td> --> 
-    </tr>
-    <!-- {% if perfuração.uso_martelo_fundo %}
-    <tr><td colspan="4">* Inclui uso de Martelo de Fundo (DTH)</td></tr>
-    {% endif %} -->
-  </table>
-  <!-- <ul>
-    <li>Tubulação: {{ estrutura_poco.tubulacao_metros }} metros - {{ estrutura_poco.tubulacao_diametro }}</li>
-    {% if estrutura_poco.filtro_fundo %}<li>✓ Filtro de fundo</li>{% endif %}
-    {% if estrutura_poco.vedacao_sanitaria %}<li>✓ Vedação sanitária</li>{% endif %}
-    {% if estrutura_poco.tampa_superior %}<li>✓ Tampa superior de proteção</li>{% endif %}
-  </ul> -->
+  <table id="prospeccao-tabela"></table>
 
-  <div class="section-title">Equipamentos</div>
-  <table>
-    <tr><th>Item</th><th>Valor Unitário</th><th>Total</th></tr>
-    <tr id="equipamentos">
-       
-      <!-- <td>{{ perfuração.metros_perfuração }} m</td>
-      <td>R$ {{ perfuração.preco_por_metro }}</td>
-      <td>R$ {{ perfuração.metros_perfuração * perfuração.preco_por_metro }}</td> --> 
-    </tr>
-    <!-- {% if perfuração.uso_martelo_fundo %}
-    <tr><td colspan="4">* Inclui uso de Martelo de Fundo (DTH)</td></tr>
-    {% endif %} -->
-  </table>
+  <div class="section-title">Instalação de equipamentos</div>
+  <table id="prospeccao-tabela"></table>
 
   <div class="section-title">Instalação</div>
   <ul>
-    {% if instalacao.instalacao_completa %}<li>✓ Instalação completa dos equipamentos</li>{% endif %}
-    {% if instalacao.testes_vazao %}<li>✓ Testes de vazão e funcionamento</li>{% endif %}
-    {% if instalacao.aterramento %}<li>✓ Aterramento elétrico de segurança</li>{% endif %}
+    <li>✓ Instalação completa dos equipamentos</li>
+    <li>✓ Testes de vazão e funcionamento</li>
+    <li>✓ Aterramento elétrico de segurança</li>
   </ul>
 
   <div class="section-title">Documentação</div>
-  <ul>
-    {% if documentacao.outorga %}<li>✓ Outorga ou dispensa</li>{% endif %}
-    {% if documentacao.art %}<li>✓ ART (Anotação de Responsabilidade Técnica)</li>{% endif %}
-    {% if documentacao.cadastro_orgao_ambiental %}<li>✓ Cadastro no órgão ambiental</li>{% endif %}
-    {% if documentacao.taxas_publicas %}<li>✓ Taxas e emolumentos incluídos</li>{% endif %}
-  </ul>
+  <table id="prospeccao-tabela"></table>
 
   <div class="section-title">Extras</div>
   <ul>
-    {% if extras.reservatorio %}<li>✓ Reservatório: {{ extras.reservatorio }}</li>{% endif %}
-    {% if extras.placa_sinalizacao %}<li>✓ Placa de sinalização</li>{% endif %}
+    <li>✓ Reservatório: {{ extras.reservatorio }}</li>
+    <li>✓ Placa de sinalização</li>
   </ul>
 
   <div class="section-title">Condições Comerciais</div>

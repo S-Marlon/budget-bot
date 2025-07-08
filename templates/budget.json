@@ -4,70 +4,46 @@
     "cidade": "Bragança Paulista",
     "local": "Chácara Santa Rita"
   },
-  "prospeccao": {
-    "visita_tecnica": true,
-    "sondagem_geofisica": false,
-    "relatorio_tecnico": true
-  },
-  "perfuração": {
-    "metros_perfuração": 68,
-    "preco_por_metro": 210,
-    "tipo_solo": "arenito",
-    "uso_martelo_fundo": true,
-    "lama_perfuração": false
-  },
-  "estrutura_poco": {
-    "tubulacao_diametro": "4\"",
-    "tubulacao_metros": 68,
-    "filtro_fundo": true,
-    "casing": false,
-    "vedacao_sanitaria": true,
-    "tampa_superior": true
-  },
-  "equipamentos": {
-    "bomba_submersa": {
-      "instalar": true,
-      "potencia_cv": 1.5
+  "prospeccao": [
+    {
+      "descricao": "Visita técnica ao local",
+      "quantidade": 1,
+      "valor": 1000
     },
-    "painel_comando": true,
-    "sensor_nivel": true,
-    "mangueira_metros": 30,
-    "cabo_eletrico_metros": 30,
-    "valvula_retalho": true,
-    "filtro_agua": "filtro de carvão"
-  },
-  "instalacao": {
-    "instalacao_completa": true,
-    "quadro_comando_alvenaria": false,
-    "testes_vazao": true,
-    "aterramento": true
-  },
-  "documentacao": {
-    "outorga": true,
-    "art": true,
-    "cadastro_orgao_ambiental": true,
-    "laudo_tecnico": false,
-    "taxas_publicas": true
-  },
-  "logistica": {
-    "frete_material": true,
-    "deslocamento_equipes": true,
-    "hospedagem_obras_rurais": false
-  },
-  "extras": {
-    "reservatorio": "caixa d’água 1000L",
-    "automacao_wifi": false,
-    "placa_sinalizacao": true,
-    "limpeza_com_pipa": false,
-    "garantia_estendida": false
-  },
-  "pagamento": {
-    "forma": "PIX",
-    "entrada": "30%",
-    "parcelas": "2x no boleto"
-  },
-  "condicoes": {
-    "validade_proposta": "10 dias",
-    "prazo_execucao": "até 7 dias úteis após aprovação"
-  }
+    {
+      "descricao": "Relatório técnico",
+      "quantidade": 1,
+      "valor": 1000
+    }
+  ],
+  "perfuracao": [
+    {
+      "descricao": "Perfuração 6\" em sedimento",
+      "quantidade": 20
+    },
+    {
+      "descricao": "Perfuração 6\" em rocha sã",
+      "quantidade": 10
+    }
+  ],
+  "equipamentos": [
+    {
+      "descricao": "Bomba submersa 1.5 CV",
+      "quantidade": 1
+    },
+    {
+      "descricao": "Painel de comando digital",
+      "quantidade": 1
+    }
+  ],
+  "documentacao": [
+    {
+      "descricao": "Outorga",
+      "quantidade": null
+    },
+    {
+      "descricao": "ART",
+      "quantidade": null
+    }
+  ]
 }
