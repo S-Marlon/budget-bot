@@ -54,45 +54,57 @@
   <strong>Local:</strong><span id="cliente-local"></span></p>
 
   <div class="section-title">Prospecção</div>
-  <ul>
-    {% if prospeccao.visita_tecnica %}<li>✓ Visita Técnica</li>{% endif %}
-    {% if prospeccao.sondagem_geofisica %}<li>✓ Sondagem Geofísica</li>{% endif %}
-    {% if prospeccao.relatorio_tecnico %}<li>✓ Relatório Técnico</li>{% endif %}
-  </ul>
+  <ul id="listagem">
+   </ul>
 
   <div class="section-title">Perfuração</div>
   <table>
     <tr><th>Item</th><th>Quantidade</th><th>Valor Unitário</th><th>Total</th></tr>
-    <tr>
-      <td>Perfuração</td>
-      <td>{{ perfuração.metros_perfuração }} m</td>
+    <tr id="perfuração">
+       <td>Perfuração</td>
+      <!-- <td>{{ perfuração.metros_perfuração }} m</td>
       <td>R$ {{ perfuração.preco_por_metro }}</td>
-      <td>R$ {{ perfuração.metros_perfuração * perfuração.preco_por_metro }}</td>
+      <td>R$ {{ perfuração.metros_perfuração * perfuração.preco_por_metro }}</td> --> 
     </tr>
-    {% if perfuração.uso_martelo_fundo %}
+    <!-- {% if perfuração.uso_martelo_fundo %}
     <tr><td colspan="4">* Inclui uso de Martelo de Fundo (DTH)</td></tr>
-    {% endif %}
+    {% endif %} -->
   </table>
 
   <div class="section-title">Tubulação e Estrutura</div>
-  <ul>
+  
+  <table>
+    <tr><th>Polegadas</th><th>Quantidade</th><th>Valor Unitário</th><th>Total</th></tr>
+    <tr id="estrutura">
+       
+      <!-- <td>{{ perfuração.metros_perfuração }} m</td>
+      <td>R$ {{ perfuração.preco_por_metro }}</td>
+      <td>R$ {{ perfuração.metros_perfuração * perfuração.preco_por_metro }}</td> --> 
+    </tr>
+    <!-- {% if perfuração.uso_martelo_fundo %}
+    <tr><td colspan="4">* Inclui uso de Martelo de Fundo (DTH)</td></tr>
+    {% endif %} -->
+  </table>
+  <!-- <ul>
     <li>Tubulação: {{ estrutura_poco.tubulacao_metros }} metros - {{ estrutura_poco.tubulacao_diametro }}</li>
     {% if estrutura_poco.filtro_fundo %}<li>✓ Filtro de fundo</li>{% endif %}
     {% if estrutura_poco.vedacao_sanitaria %}<li>✓ Vedação sanitária</li>{% endif %}
     {% if estrutura_poco.tampa_superior %}<li>✓ Tampa superior de proteção</li>{% endif %}
-  </ul>
+  </ul> -->
 
   <div class="section-title">Equipamentos</div>
-  <ul>
-    {% if equipamentos.bomba_submersa.instalar %}
-    <li>Bomba submersa: {{ equipamentos.bomba_submersa.potencia_cv }} CV</li>
-    {% endif %}
-    {% if equipamentos.painel_comando %}<li>✓ Painel de comando</li>{% endif %}
-    {% if equipamentos.sensor_nivel %}<li>✓ Sensor de nível</li>{% endif %}
-    {% if equipamentos.filtro_agua %}<li>✓ Filtro de água: {{ equipamentos.filtro_agua }}</li>{% endif %}
-    <li>Mangueira: {{ equipamentos.mangueira_metros }} metros</li>
-    <li>Cabo elétrico: {{ equipamentos.cabo_eletrico_metros }} metros</li>
-  </ul>
+  <table>
+    <tr><th>Item</th><th>Valor Unitário</th><th>Total</th></tr>
+    <tr id="equipamentos">
+       
+      <!-- <td>{{ perfuração.metros_perfuração }} m</td>
+      <td>R$ {{ perfuração.preco_por_metro }}</td>
+      <td>R$ {{ perfuração.metros_perfuração * perfuração.preco_por_metro }}</td> --> 
+    </tr>
+    <!-- {% if perfuração.uso_martelo_fundo %}
+    <tr><td colspan="4">* Inclui uso de Martelo de Fundo (DTH)</td></tr>
+    {% endif %} -->
+  </table>
 
   <div class="section-title">Instalação</div>
   <ul>

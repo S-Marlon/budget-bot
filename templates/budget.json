@@ -7,11 +7,11 @@
   "prospeccao": {
     "visita_tecnica": true,
     "sondagem_geofisica": false,
-    "relatorio_tecnico": false
+    "relatorio_tecnico": true
   },
   "perfuração": {
     "metros_perfuração": 68,
-    "preco_por_metro": 75,
+    "preco_por_metro": 210,
     "tipo_solo": "arenito",
     "uso_martelo_fundo": true,
     "lama_perfuração": false
