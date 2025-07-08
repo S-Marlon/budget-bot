@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Orçamento de Perfuração</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      margin: 40px;
+      color: #333;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #004080;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    .section-title {
+      background-color: #e6f0ff;
+      padding: 6px;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+    .total {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: right;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Orçamento de Perfuração de Poço</h1>
+  <h2>MAC POÇOS</h2>
+
+  <!-- <ul id="budget-list">
+
+  </ul> -->
+
+  <p><strong>Cliente:</strong> <span id="cliente-nome"></span><br>
+  <strong>Local:</strong><span id="cliente-local"></span></p>
+
+  <div class="section-title">Prospecção</div>
+  <ul>
+    {% if prospeccao.visita_tecnica %}<li>✓ Visita Técnica</li>{% endif %}
+    {% if prospeccao.sondagem_geofisica %}<li>✓ Sondagem Geofísica</li>{% endif %}
+    {% if prospeccao.relatorio_tecnico %}<li>✓ Relatório Técnico</li>{% endif %}
+  </ul>
+
+  <div class="section-title">Perfuração</div>
+  <table>
+    <tr><th>Item</th><th>Quantidade</th><th>Valor Unitário</th><th>Total</th></tr>
+    <tr>
+      <td>Perfuração</td>
+      <td>{{ perfuração.metros_perfuração }} m</td>
+      <td>R$ {{ perfuração.preco_por_metro }}</td>
+      <td>R$ {{ perfuração.metros_perfuração * perfuração.preco_por_metro }}</td>
+    </tr>
+    {% if perfuração.uso_martelo_fundo %}
+    <tr><td colspan="4">* Inclui uso de Martelo de Fundo (DTH)</td></tr>
+    {% endif %}
+  </table>
+
+  <div class="section-title">Tubulação e Estrutura</div>
+  <ul>
+    <li>Tubulação: {{ estrutura_poco.tubulacao_metros }} metros - {{ estrutura_poco.tubulacao_diametro }}</li>
+    {% if estrutura_poco.filtro_fundo %}<li>✓ Filtro de fundo</li>{% endif %}
+    {% if estrutura_poco.vedacao_sanitaria %}<li>✓ Vedação sanitária</li>{% endif %}
+    {% if estrutura_poco.tampa_superior %}<li>✓ Tampa superior de proteção</li>{% endif %}
+  </ul>
+
+  <div class="section-title">Equipamentos</div>
+  <ul>
+    {% if equipamentos.bomba_submersa.instalar %}
+    <li>Bomba submersa: {{ equipamentos.bomba_submersa.potencia_cv }} CV</li>
+    {% endif %}
+    {% if equipamentos.painel_comando %}<li>✓ Painel de comando</li>{% endif %}
+    {% if equipamentos.sensor_nivel %}<li>✓ Sensor de nível</li>{% endif %}
+    {% if equipamentos.filtro_agua %}<li>✓ Filtro de água: {{ equipamentos.filtro_agua }}</li>{% endif %}
+    <li>Mangueira: {{ equipamentos.mangueira_metros }} metros</li>
+    <li>Cabo elétrico: {{ equipamentos.cabo_eletrico_metros }} metros</li>
+  </ul>
+
+  <div class="section-title">Instalação</div>
+  <ul>
+    {% if instalacao.instalacao_completa %}<li>✓ Instalação completa dos equipamentos</li>{% endif %}
+    {% if instalacao.testes_vazao %}<li>✓ Testes de vazão e funcionamento</li>{% endif %}
+    {% if instalacao.aterramento %}<li>✓ Aterramento elétrico de segurança</li>{% endif %}
+  </ul>
+
+  <div class="section-title">Documentação</div>
+  <ul>
+    {% if documentacao.outorga %}<li>✓ Outorga ou dispensa</li>{% endif %}
+    {% if documentacao.art %}<li>✓ ART (Anotação de Responsabilidade Técnica)</li>{% endif %}
+    {% if documentacao.cadastro_orgao_ambiental %}<li>✓ Cadastro no órgão ambiental</li>{% endif %}
+    {% if documentacao.taxas_publicas %}<li>✓ Taxas e emolumentos incluídos</li>{% endif %}
+  </ul>
+
+  <div class="section-title">Extras</div>
+  <ul>
+    {% if extras.reservatorio %}<li>✓ Reservatório: {{ extras.reservatorio }}</li>{% endif %}
+    {% if extras.placa_sinalizacao %}<li>✓ Placa de sinalização</li>{% endif %}
+  </ul>
+
+  <div class="section-title">Condições Comerciais</div>
+  <ul>
+    <li><strong>Forma de Pagamento:</strong> {{ pagamento.forma }} ({{ pagamento.entrada }}, {{ pagamento.parcelas }})</li>
+    <li><strong>Prazo de Execução:</strong> {{ condicoes.prazo_execucao }}</li>
+    <li><strong>Validade da Proposta:</strong> {{ condicoes.validade_proposta }}</li>
+  </ul>
+
+  <p class="total">Total estimado: <strong>R$ [valor calculado]</strong></p>
+
+  <p><em>* Este é um orçamento estimado, sujeito a confirmação técnica no local.</em></p>
+
+  <script src="./js/script.js"></script>
+
+</body>
+</html>
