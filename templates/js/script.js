@@ -29,23 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
 
-//  const tabela = document.getElementById('prospeccao').getElementsByTagName('tbody')[0];
-//             tabela.innerHTML = ''; // Limpa linhas antigas
-
-//             data.prospeccao.forEach((item, idx) => {
-//                 const tr = document.createElement('tr');
-//                 tr.innerHTML = `
-//                     <td>${idx + 1}</td>
-//                     <td>${item.descricao}</td>
-//                     <td>${item.quantidade}</td>
-//                     <td>${item.valor}</td>
-//                     <td>${item.valor * item.quantidade }</td>
-//                 `;
-//                 tabela.appendChild(tr);
-//         })
-
-
-        
+    
         });
         totalizacao();
 })

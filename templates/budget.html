@@ -102,6 +102,14 @@
   </table>
 
   <div class="section-title">Extras</div>
+   
+ <div class="section-title">Instalação</div>
+  <ul>
+    <li>✓ Instalação completa dos equipamentos</li>
+    <li>✓ Testes de vazão e funcionamento</li>
+    <li>✓ Aterramento elétrico de segurança</li>
+  </ul>
+
   <ul>
     <li>✓ Reservatório: {{ extras.reservatorio }}</li>
     <li>✓ Placa de sinalização</li>
@@ -118,13 +126,53 @@
 
   <p><em>* Este é um orçamento estimado, sujeito a confirmação técnica no local.</em></p>
 
-  <script src="./js/script.js"></script>
+  <script>
+    topicos = ["Prospeccao","Perfuracao","Estrutura","equipamentos","Instalação","Documentação","Extras"]
+
+document.addEventListener('DOMContentLoaded', async function() {
+    await fetch('./budget.json')
+        .then(response => response.json())
+        .then(data => {
+
+            console.log("antes do for "+ Object.keys(data));
+             for (let key in data) {
+                if (Array.isArray(data[key])) {
+                    console.log("a chave é" + key);
+                    
+                    // Exemplo: monta id da tabela igual ao nome da key
+                    const tabela = document.getElementById(key + '-tabela');
+                    if (!tabela) continue; // pula se não existir tabela para essa key
+                    const tbody = tabela.getElementsByTagName('tbody')[0];
+                    tbody.innerHTML = '';
+                    data[key].forEach((item, idx) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td style="width: 8%;">${idx + 1}</td>
+                            <td style="width: 42%;">${item.descricao ?? '-'}</td>
+                            <td style="width: 15%;">${item.quantidade ?? '-'}</td>
+                            <td style="width: 15%;">${item.valor ?? '-'}</td>
+                            <td style="width: 20%;" class="total">${item.valor * item.quantidade ?? '-'}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+    
+        });
+        totalizacao();
+})
+
+function totalizacao() {
+     let somaTotal = 0;
+document.querySelectorAll(".total").forEach(e =>{
+     const valor = Number(e.textContent.replace(/[^\d.,-]/g, '').replace(',', '.'));
+    if (!isNaN(valor)) somaTotal += valor;
+});
+document.querySelector("#valor_calculado").textContent = somaTotal
+}
+  </script>
 
 </body>
 </html>
-  <!-- <div class="section-title">Instalação</div>
-  <ul>
-    <li>✓ Instalação completa dos equipamentos</li>
-    <li>✓ Testes de vazão e funcionamento</li>
-    <li>✓ Aterramento elétrico de segurança</li>
-  </ul> -->
+ 
