@@ -1,26 +1,67 @@
+topicos = ["Prospeccao","Perfuracao","Estrutura","equipamentos","Instalação","Documentação","Extras"]
+
 document.addEventListener('DOMContentLoaded', async function() {
     await fetch('budget.json')
         .then(response => response.json())
         .then(data => {
- const tabela = document.getElementById('prospeccao').getElementsByTagName('tbody')[0];
-            tabela.innerHTML = ''; // Limpa linhas antigas
 
-            data.prospeccao.forEach((item, idx) => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${idx + 1}</td>
-                    <td>${item.descricao}</td>
-                    <td>${item.quantidade}</td>
-                    <td>${item.valor}</td>
-                    <td>${item.valor * item.quantidade }</td>
-                `;
-                tabela.appendChild(tr);
-           
-           
-        })
+            console.log("antes do for "+ Object.keys(data));
+             for (let key in data) {
+                if (Array.isArray(data[key])) {
+                    console.log("a chave é" + key);
+                    
+                    // Exemplo: monta id da tabela igual ao nome da key
+                    const tabela = document.getElementById(key + '-tabela');
+                    if (!tabela) continue; // pula se não existir tabela para essa key
+                    const tbody = tabela.getElementsByTagName('tbody')[0];
+                    tbody.innerHTML = '';
+                    data[key].forEach((item, idx) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td style="width: 8%;">${idx + 1}</td>
+                            <td style="width: 42%;">${item.descricao ?? '-'}</td>
+                            <td style="width: 15%;">${item.quantidade ?? '-'}</td>
+                            <td style="width: 15%;">${item.valor ?? '-'}</td>
+                            <td style="width: 20%;" class="total">${item.valor * item.quantidade ?? '-'}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            }
+
+//  const tabela = document.getElementById('prospeccao').getElementsByTagName('tbody')[0];
+//             tabela.innerHTML = ''; // Limpa linhas antigas
+
+//             data.prospeccao.forEach((item, idx) => {
+//                 const tr = document.createElement('tr');
+//                 tr.innerHTML = `
+//                     <td>${idx + 1}</td>
+//                     <td>${item.descricao}</td>
+//                     <td>${item.quantidade}</td>
+//                     <td>${item.valor}</td>
+//                     <td>${item.valor * item.quantidade }</td>
+//                 `;
+//                 tabela.appendChild(tr);
+//         })
+
+
         
         });
+        totalizacao();
+})
+
+function totalizacao() {
+     let somaTotal = 0;
+document.querySelectorAll(".total").forEach(e =>{
+     const valor = Number(e.textContent.replace(/[^\d.,-]/g, '').replace(',', '.'));
+    if (!isNaN(valor)) somaTotal += valor;
 });
+document.querySelector("#valor_calculado").textContent = somaTotal
+}
+   
+
+
+
 
 
         // // const budgetList = document.getElementById('budget-list');

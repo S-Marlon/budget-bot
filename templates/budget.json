@@ -1,12 +1,17 @@
 {
-  "cliente": {
-    "nome": "João da Silva",
-    "cidade": "Bragança Paulista",
-    "local": "Chácara Santa Rita"
-  },
   "prospeccao": [
     {
       "descricao": "Visita técnica ao local",
+      "quantidade": 1,
+      "valor": 1000
+    },
+    {
+      "descricao": "Sondagem geofísica",
+      "quantidade": 1,
+      "valor": 1000
+    },
+    {
+      "descricao": "Prospecção Radiestésica",
       "quantidade": 1,
       "valor": 1000
     },
@@ -18,32 +23,115 @@
   ],
   "perfuracao": [
     {
-      "descricao": "Perfuração 6\" em sedimento",
-      "quantidade": 20
+      "descricao": "Perfuração 6\" em sedimento - de 00 a 32 m",
+      "quantidade": 32,
+      "valor": 250
     },
     {
-      "descricao": "Perfuração 6\" em rocha sã",
-      "quantidade": 10
+      "descricao": "Perfuração 6\" em rocha sã - de 32 a 40 m",
+      "quantidade": 8,
+      "valor": 230
+    },
+    {
+      "descricao": "Perfuração 6\" em rocha sã - de 40 a 100 m",
+      "quantidade": 60,
+      "valor": 200
+    },
+    {
+      "descricao": "Perfuração 4\" em rocha sã - de 100 a 150 m",
+      "quantidade": 50,
+      "valor": 195
+    },
+    {
+      "descricao": "Perfuração 4\" em rocha sã - de 150 a 200 m",
+      "quantidade": 50,
+      "valor": 195
+    },
+    {
+      "descricao": "Perfuração 4\" em rocha sã - de 200 a 250 m",
+      "quantidade": 50,
+      "valor": 195
+    }
+  ],
+  "estrutura": [
+    {
+      "descricao": "Tubo de aço",
+      "quantidade":10,
+      "valor":370
+    },
+    {
+      "descricao": "Filtro e pré-filtro",
+      "quantidade": 1,
+      "valor":350
     }
   ],
   "equipamentos": [
     {
       "descricao": "Bomba submersa 1.5 CV",
-      "quantidade": 1
+      "quantidade": 1,
+      "valor":900
+    },
+   {
+      "descricao": "painel elétrico",
+      "quantidade": 1,
+      "valor":500
     },
     {
-      "descricao": "Painel de comando digital",
-      "quantidade": 1
+      "descricao": "Cabos elétricos submersos",
+      "quantidade": 60,
+      "valor":3.8
+    },
+    {
+      "descricao": "Válvula de retenção",
+      "quantidade": 1,
+      "valor":20
+    },
+    {
+      "descricao": " tubo de recalque",
+      "quantidade": 6,
+      "valor":70
+    },
+    {
+      "descricao": "Corda Submersa",
+      "quantidade": 60,
+      "valor":1.7
+    },
+    {
+      "descricao": "Tampa de poço",
+      "quantidade": 1,
+      "valor":100
     }
   ],
   "documentacao": [
     {
       "descricao": "Outorga",
-      "quantidade": null
+      "quantidade": 1,
+      "valor":500
     },
     {
-      "descricao": "ART",
-      "quantidade": null
+      "descricao": "Cadastro no órgão ambiental (DAEE, ANA, etc.)",
+      "quantidade": 1,
+      "valor":500
+    },
+    {
+      "descricao": "Relatório hidrogeológico ou laudo técnico",
+      "quantidade": 1,
+      "valor":500
+    },
+    {
+      "descricao": "Anotação de Responsabilidade Técnica (ART)",
+      "quantidade": 1,
+      "valor":500
+    },
+    {
+      "descricao": "Projeto técnico do poço",
+      "quantidade": 1,
+      "valor":500
+    },
+    {
+      "descricao": "Taxas e emolumentos",
+      "quantidade": 1,
+      "valor":500
     }
   ]
 }

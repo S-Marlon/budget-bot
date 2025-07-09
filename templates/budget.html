@@ -17,15 +17,17 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 30px;
+      margin-bottom: 0px;
     }
     th, td {
       border: 1px solid #ccc;
       padding: 8px;
       text-align: left;
+      
     }
     th {
       background-color: #f0f0f0;
+      
     }
     .section-title {
       background-color: #e6f0ff;
@@ -48,14 +50,14 @@
   <p><strong>Cliente:</strong> <span id="cliente-nome"></span><br>
   <strong>Local:</strong><span id="cliente-local"></span></p>
 
-  <table id="prospeccao-tabela">
+  <table id="tabela">
   <thead>
     <tr>
-      <th>Item</th>
-      <th>Descrição</th>
-      <th>Quantidade</th>
-      <th>Valor (R$)</th>
-      <th>Valor  Total(R$)</th>
+      <th style="width: 8%;">Item</th>
+      <th style="width: 42%;">Descrição</th>
+      <th style="width: 15%;">Quantidade</th>
+      <th style="width: 15%;">Valor (R$)</th>
+      <th style="width: 20%;">Valor  Total(R$)</th>
     </tr>
   </thead>
   <tbody>
@@ -63,34 +65,41 @@
   </tbody>
 </table>
   <div class="section-title">Prospecção</div>
-  <table id="prospeccao">
+  <table id="prospeccao-tabela">
   <tbody>
-    
+
   </tbody>
 </table>
 
   <div class="section-title">Perfuração</div>
-  <table id="Mads">
+  <table id="perfuracao-tabela">
   <tbody>
     <!-- Linhas serão inseridas aqui pelo JS -->
   </tbody>
 </table>
 
   <div class="section-title">Tubulação e Estrutura</div>
-  <table id="prospeccao-tabela"></table>
+  <table id="estrutura-tabela">
+<tbody>
+    <!-- Linhas serão inseridas aqui pelo JS -->
+  </tbody>
+  </table>
 
   <div class="section-title">Instalação de equipamentos</div>
-  <table id="prospeccao-tabela"></table>
+  <table id="equipamentos-tabela">
+    <tbody>
+    <!-- Linhas serão inseridas aqui pelo JS -->
+  </tbody>
+  </table>
 
-  <div class="section-title">Instalação</div>
-  <ul>
-    <li>✓ Instalação completa dos equipamentos</li>
-    <li>✓ Testes de vazão e funcionamento</li>
-    <li>✓ Aterramento elétrico de segurança</li>
-  </ul>
+
 
   <div class="section-title">Documentação</div>
-  <table id="prospeccao-tabela"></table>
+  <table id="documentacao-tabela">
+    <tbody>
+    <!-- Linhas serão inseridas aqui pelo JS -->
+  </tbody>
+  </table>
 
   <div class="section-title">Extras</div>
   <ul>
@@ -105,7 +114,7 @@
     <li><strong>Validade da Proposta:</strong> {{ condicoes.validade_proposta }}</li>
   </ul>
 
-  <p class="total">Total estimado: <strong>R$ [valor calculado]</strong></p>
+  <p class="total">Total estimado: <strong id="valor_calculado">R$ [valor calculado]</strong></p>
 
   <p><em>* Este é um orçamento estimado, sujeito a confirmação técnica no local.</em></p>
 
@@ -113,3 +122,9 @@
 
 </body>
 </html>
+  <!-- <div class="section-title">Instalação</div>
+  <ul>
+    <li>✓ Instalação completa dos equipamentos</li>
+    <li>✓ Testes de vazão e funcionamento</li>
+    <li>✓ Aterramento elétrico de segurança</li>
+  </ul> -->
