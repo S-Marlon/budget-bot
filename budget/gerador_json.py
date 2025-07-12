@@ -2,11 +2,35 @@ import json
 import copy
 import math
 
+modelo_json = {
+    "cliente": {
+        "nome": "",
+        "cidade": "",
+        "local": ""
+    },
+    "prospeccao": [],
+    "perfuracao": [],
+    "estrutura": [],
+    "equipamentos": [],
+    "documentacao": []
+}
+
 modelo_item = {
     "descricao": "",
-    "quantidade": None,
+    "quantidade": 0,
     "valor": 0
 }
+
+modelo_itens_equipamentos = [
+    "Bomba",
+    "Tampa de poço",
+    "Painel",
+    "Cabos elétricos submersos",
+    "Válvula de retenção",
+    "Corda Submersa",
+    "Hidrômetro",
+    "Cimentação"
+]
 
 tubos = [
     {"descricao": "Tubo 6\" de PVC", "quantidade": 10, "valor": 150},
@@ -53,40 +77,27 @@ modelo_perfuracao = [
     }
 ]
 
-modelo_estrutura = [
-    {
-      "descricao": "Revestimento em Tubo de aço 6'",
-      "quantidade": 32,
-      "valor": 250
-    },
-    {
-      "descricao": "Revestimento em Tubo de PVC 6'",
-      "quantidade": 32,
-      "valor": 250
-    },
-    {
-      "descricao": "Tubo Interno de Aço 1'",
-      "quantidade": 32,
-      "valor": 250
-    },
-    {
-      "descricao": "Tubo Interno de PVC 1'",
-      "quantidade": 32,
-      "valor": 250
-    }
-]
+modelo_estrutura = {
+    "simples": [
+        {"descricao": "Tubo pvc 6'", "quantidade": lambda m: math.ceil(m / 6), "valor": 80},
+        {"descricao": "Tubo pvc 1'", "quantidade": lambda m: math.ceil(m / 6), "valor": 30}
+    ],
+    "padrao": [
+        {"descricao": "Tubo aço 6'", "quantidade": lambda m: 6, "valor": 300},
+        {"descricao": "Tubo pvc 1'", "quantidade": lambda m: math.ceil(m / 6), "valor": 30}
+    ],
+    "reforcada": [
+        {"descricao": "Tubo aço 6'", "quantidade": lambda m: 6, "valor": 300},
+        {"descricao": "Tubo aço 1'", "quantidade": lambda m: math.ceil(m / 6), "valor": 90}
+    ]
+}
 
-modelo_json = {
-    "cliente": {
-        "nome": "",
-        "cidade": "",
-        "local": ""
-    },
-    "prospeccao": [],
-    "perfuracao": [],
-    "estrutura": [],
-    "equipamentos": [],
-    "documentacao": []
+
+modelo_equipamento = {
+    60: [],
+    100: [],
+    150: [],
+    200: []
 }
 
 def gerarPDF(trabalho, tipo):
@@ -100,70 +111,68 @@ def gerarPDF(trabalho, tipo):
     return f"Salve"
 
 orcamento = copy.deepcopy(modelo_json)
-
+# ---------nome----------
 orcamento["cliente"]["nome"] = "João da Silva"
 orcamento["cliente"]["cidade"] = "Atibaia"
 orcamento["cliente"]["local"] = "Sítio Boa Vista"
+# ---------nome----------
 
 estrutura = 'padrao'
-valoPergurado = 129
-# contra metragem, numero maximo dividido por 5 +2
+valoPergurado = 130
+
 item_perf = (math.ceil(valoPergurado/50) +2) 
-# assim pega a quantidade de itens e adciona do modelo
-print(f'itens a ser adcionado: {item_perf}')
+
+# print(f'itens a ser adcionado: {item_perf}')
 for item in modelo_perfuracao[:item_perf]:
     orcamento["perfuracao"].append(copy.deepcopy(item))
 
+# ---------estrutura----------
 
-if estrutura == 'simples':
+if estrutura in modelo_estrutura:
+    for item in modelo_estrutura[estrutura]:
+        item_estr = copy.deepcopy(modelo_item)
+        item_estr["descricao"] = item["descricao"]
+        item_estr["quantidade"] = item["quantidade"](valoPergurado)
+        item_estr["valor"] = item["valor"]
+        orcamento["estrutura"].append(item_estr)
+else:
+    print("⚠️ Tipo de estrutura desconhecido:", estrutura)
 
-    # adiciona item de Estrutura
-    item_estr = copy.deepcopy(modelo_item)
-    item_estr["descricao"] = "Tubo pvc 6'"
-    item_estr["quantidade"] = math.ceil(valoPergurado/6)
-    item_estr["valor"] = 80
-    orcamento["estrutura"].append(item_estr)
-
-    # adiciona item de Estrutura
-    item_estr = copy.deepcopy(modelo_item)
-    item_estr["descricao"] = "Tubo pvc 1'"
-    item_estr["quantidade"] = math.ceil(valoPergurado/6)
-    item_estr["valor"] = 30
-    orcamento["estrutura"].append(item_estr)
-    
-elif estrutura == 'padrao':
-     # adiciona item de Estrutura
-    item_estr = copy.deepcopy(modelo_item)
-    item_estr["descricao"] = "Tubo aço 6'"
-    item_estr["quantidade"] = 6
-    item_estr["valor"] = 300
-    orcamento["estrutura"].append(item_estr)
-
-    # adiciona item de Estrutura
-    item_estr = copy.deepcopy(modelo_item)
-    item_estr["descricao"] = "Tubo pvc 1'"
-    item_estr["quantidade"] = math.ceil(valoPergurado/6)
-    item_estr["valor"] = 30
-    orcamento["estrutura"].append(item_estr)
-elif estrutura == 'padrao':
-     # adiciona item de Estrutura
-    item_estr = copy.deepcopy(modelo_item)
-    item_estr["descricao"] = "Tubo aço 6'"
-    item_estr["quantidade"] = 6
-    item_estr["valor"] = 300
-    orcamento["estrutura"].append(item_estr)
-
-    # adiciona item de Estrutura
-    item_estr = copy.deepcopy(modelo_item)
-    item_estr["descricao"] = "Tubo aço 1'"
-    item_estr["quantidade"] = math.ceil(valoPergurado/6)
-    item_estr["valor"] = 90
-    orcamento["estrutura"].append(item_estr)
+# ---------estrutura----------
 
 
-print(orcamento)
+# ---------equipamento----------
+
+# equipamentos: = modelo_equipamento e cada item recebe modelo_itens_equipamentos que recebe modelo_item
+
+if valoPergurado <= 60:
+    profundidade = 60
+else:
+    profundidade = math.ceil(valoPergurado / 50) * 50  
+
+if profundidade in modelo_equipamento:
+    for nome_item in modelo_itens_equipamentos:
+        item = copy.deepcopy(modelo_item)
+        item["descricao"] = nome_item
+        item["quantidade"] = 1  # ou algum valor padrão se quiser
+        
+        modelo_equipamento[profundidade].append(item)
+else:
+     print("⚠️ Tipo de profundidade não suportada :", profundidade)
+
+for chave in list(modelo_equipamento):
+    if modelo_equipamento[chave] == []:
+        modelo_equipamento.pop(chave)
+        print(f"Profundidade {chave} removida")
+
+        
+orcamento["equipamentos"].append(copy.deepcopy(modelo_equipamento))
+
+# Visualizar
 
 
-# Escrevendo os dados no arquivo JSON
+print(modelo_equipamento)
+
+
 with open("dados.json", "w") as file:
     json.dump(orcamento, file)

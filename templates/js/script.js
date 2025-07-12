@@ -1,7 +1,7 @@
 topicos = ["Prospeccao","Perfuracao","Estrutura","equipamentos","Instalação","Documentação","Extras"]
 
 document.addEventListener('DOMContentLoaded', async function() {
-    await fetch('budget.json')
+    await fetch('../budget/dados.json')
         .then(response => response.json())
         .then(data => {
 
