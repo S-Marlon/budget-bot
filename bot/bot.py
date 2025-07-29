@@ -1,22 +1,47 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from unidecode import unidecode
+from telegram import ReplyKeyboardMarkup, KeyboardButton
+from telegram import Update, WebAppInfo, MenuButtonWebApp
+from telegram.ext import Application, CommandHandler, ContextTypes
+
 
 # Não precisamos mais de BytesIO se vamos ler do disco
 # from io import BytesIO
 
 # Importamos os para lidar com caminhos de arquivo
 import os
+keyboard = [[KeyboardButton("Button 1"), KeyboardButton("Button 2")],
+                [KeyboardButton("Button 3")]]
 
 perfuracao_keywords = ['perfuracao','poço']
 estrutura_keywords = ['estrutura','cano', 'tubo', 'revestimento', 'revestido']
 tipo_keywords = ['simples','padrao','grande']
 
+keyboard = [
+    ['Simple'],
+    ['médio'],
+    ['Completo']
+]
+
+reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=False)
+WEB_APP_URL = "https://macpocos.com.br"
 
 TOKEN = "7566851462:AAHF4TACvtHyYbDRf7_HlqgRBxbQXGLjmzk"
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Olá! Sou o bot de orçamentos. Envie a mensagem com os dados da obra.")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Envia uma mensagem de boas-vindas e define o menu de anexo."""
+    await update.message.reply_text(
+        "Olá! Sou o bot de orçamentos. Envie a mensagem com os dados da obra."
+    )
+    # Define o Menu de Anexo para este usuário
+    await context.bot.set_chat_menu_button(
+        chat_id=update.effective_chat.id,
+        menu_button=MenuButtonWebApp(text="Abrir Orçamentos", web_app=WebAppInfo(url=WEB_APP_URL))
+    )
+    await update.message.reply_text(
+        "Você pode usar o botão 'Abrir Orçamentos' no menu de anexo para gerenciar suas solicitações!"
+    )
 
 async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mensagem = update.message.text
