@@ -1,4 +1,4 @@
-from telegram import Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from unidecode import unidecode
 from telegram import ReplyKeyboardMarkup, KeyboardButton
@@ -11,37 +11,46 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 
 # Importamos os para lidar com caminhos de arquivo
 import os
-keyboard = [[KeyboardButton("Button 1"), KeyboardButton("Button 2")],
-                [KeyboardButton("Button 3")]]
+
 
 perfuracao_keywords = ['perfuracao','poço']
 estrutura_keywords = ['estrutura','cano', 'tubo', 'revestimento', 'revestido']
 tipo_keywords = ['simples','padrao','grande']
 
 keyboard = [
-    ['Simple'],
-    ['médio'],
-    ['Completo']
+    ['💧 Solicitar orçamento'],
+    ['📞 Falar com atendente'],
+    ['📦 Ver equipamentos']
 ]
 
-reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=False)
+
 WEB_APP_URL = "https://macpocos.com.br"
 
 TOKEN = "7566851462:AAHF4TACvtHyYbDRf7_HlqgRBxbQXGLjmzk"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Envia uma mensagem de boas-vindas e define o menu de anexo."""
-    await update.message.reply_text(
-        "Olá! Sou o bot de orçamentos. Envie a mensagem com os dados da obra."
-    )
-    # Define o Menu de Anexo para este usuário
-    await context.bot.set_chat_menu_button(
-        chat_id=update.effective_chat.id,
-        menu_button=MenuButtonWebApp(text="Abrir Orçamentos", web_app=WebAppInfo(url=WEB_APP_URL))
-    )
-    await update.message.reply_text(
-        "Você pode usar o botão 'Abrir Orçamentos' no menu de anexo para gerenciar suas solicitações!"
-    )
+    keyboard = [
+        [InlineKeyboardButton("📍 Abrir Coordenada", callback_data='ver_mapa')],
+         [InlineKeyboardButton("📊 Ver Estatísticas", callback_data='ver_dados')],
+         [InlineKeyboardButton("🖨 Gerar Orçamento", callback_data='ver_dados')],
+         [InlineKeyboardButton("💬 Contato", url="https://t.me/seu_usuario")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+        
+    await update.message.reply_text("Escolha uma opção:", reply_markup=reply_markup)
+
+    # Tratador dos botões
+    async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        query = update.callback_query
+        await query.answer()
+
+        if query.data == "ver_mapa":
+            await query.edit_message_text(text="🗺️ Aguardando... carregando o mapa.")
+            # aqui você poderia enviar a imagem, ou link interativo do mapa
+            await context.bot.send_photo(chat_id=query.message.chat_id, photo=open("mapa.png", "rb"))
+
+        elif query.data == "ver_dados":
+            await query.edit_message_text(text="📊 Dados da região:\n- Poços: 23\n- Profundidade média: 42m")
 
 async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mensagem = update.message.text
