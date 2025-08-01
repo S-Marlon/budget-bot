@@ -2,6 +2,8 @@ import json
 import copy
 import math
 
+apenasPerfuração = bool
+
 modelo_json = {
     "cliente": {
         "nome": "",
@@ -32,11 +34,12 @@ modelo_itens_equipamentos = [
     "Cimentação"
 ]
 
-tubos = [
-    {"descricao": "Tubo 6\" de PVC", "quantidade": 10, "valor": 150},
-    {"descricao": "Tubo 6\" de Aço", "quantidade": 10, "valor": 150},
-    {"descricao": "Tubo 1\" de PVC", "quantidade": 10, "valor": 150},
-    {"descricao": "Tubo 1' de Aço", "quantidade": 5, "valor": 370}
+revestimento = [
+    {"descricao": "Tubo de 10 1/4'", "quantidade": 10, "valor": 1450.00},
+    {"descricao": "Tubo galvanizado á fogo de 6'", "quantidade": 10, "valor": 490.00},
+    {"descricao": "Tubo DIN 2440 de 6'", "quantidade": 10, "valor": 370.00},
+    {"descricao": "Tubo geomecanico 5'", "quantidade": 5, "valor": 350.00},
+    {"descricao": "Tubo geomecanico 4'", "quantidade": 5, "valor": 320.00}
 ]
 
 modelo_perfuracao = [
@@ -93,12 +96,54 @@ modelo_estrutura = {
 }
 
 
-modelo_equipamento = {
-    60: [],
-    100: [],
-    150: [],
-    200: []
-}
+modelo_orcamento = [
+    {'valorPerfurado': 76}
+]
+
+def dadosPerf():
+
+    # 1# verificar se o orçamento será apenas perfuração ou perfuração e materiais
+
+    if apenasPerfuração == True:
+        print(f'orçamento de perfuração')
+    else:
+        print(f'orçamento de perfuração e materiais ')
+
+
+    # 2# coletar quantidade perfurada e fzer a divisão de acordo com regras próprias
+
+    if modelo_orcamento[0] >= 50:
+        print("slave")
+
+        # calcular divisoes por valor e adcionar ao orçamento, usando sempre um divisor de 10
+    else:
+        return f'valor minimo de orçamento é 50 metros'
+
+    # 3# verificar revestimento utilizado e calcular valor, e se for apenas perfuração já gerar PDF´
+
+    if apenasPerfuração == True:
+        print(f'orçamento de perfuração')
+
+
+
+        return gerarPDF()
+
+    # #4.1 se materias não estiver incluso, calcular valor individual de materiais
+
+    if apenasPerfuração == True:
+        print(f'orçamento de perfuração')
+
+        return gerarPDF()
+
+    # #4.2 se materiais incluso incrementar valor do metro perfurado
+
+    # #5 se houver demanda de alteração de valor em especifico, realiza-la
+
+    # #6 Verificar itens auxiliares e adcionar ao Orçamento
+
+    # #7 gerar PDF de orçamento e retornar ao Telegram
+
+    gerarPDF()
 
 def gerarPDF(trabalho, tipo):
     if tipo == "Simples":
