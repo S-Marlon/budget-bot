@@ -12,11 +12,15 @@ modelo_json = {
     },
     "prospeccao": [],
     "perfuracao": [],
-    "estrutura": [],
+    "revestimento": [],
     "equipamentos": [],
     "documentacao": []
 }
 
+selected_itens = copy.deepcopy(modelo_json)
+
+print(f'selected_itens: {selected_itens}')
+ 
 modelo_item = {
     "descricao": "",
     "quantidade": 0,
@@ -34,12 +38,34 @@ modelo_itens_equipamentos = [
     "Cimentação"
 ]
 
+prospeccao = [
+    {"descricao": "Prospecção geofísica", "quantidade": 1, "valor": 1500.00},
+    {"descricao": "Prospecção geológica", "quantidade": 1, "valor": 2000.00},
+    {"descricao": "Prospecção hidrogeológica", "quantidade": 1, "valor": 2500.00},
+    {"descricao": "Prospecção geofísica e geológica", "quantidade": 1, "valor": 3000.00}
+]
+
 revestimento = [
-    {"descricao": "Tubo de 10 1/4'", "quantidade": 10, "valor": 1450.00},
-    {"descricao": "Tubo galvanizado á fogo de 6'", "quantidade": 10, "valor": 490.00},
-    {"descricao": "Tubo DIN 2440 de 6'", "quantidade": 10, "valor": 370.00},
-    {"descricao": "Tubo geomecanico 5'", "quantidade": 5, "valor": 350.00},
-    {"descricao": "Tubo geomecanico 4'", "quantidade": 5, "valor": 320.00}
+    {"descricao": "T1ubo de 10 1/4", "quantidade": 10, "valor": 1450.00},
+    {"descricao": "T2ubo galvanizado á fogo de 6", "quantidade": 10, "valor": 490.00},
+    {"descricao": "T3ubo DIN 2440 de 6", "quantidade": 10, "valor": 370.00},
+    {"descricao": "T4ubo geomecanico 5", "quantidade": 5, "valor": 350.00},
+    {"descricao": "T5ubo geomecanico 4", "quantidade": 5, "valor": 310.00}
+]
+
+
+documentacao = [
+    {"descricao": "Requerimento de dispensa de Outorga ", "quantidade": 1, "valor": 3500.00},
+    {"descricao": "Requerimento de Outorga", "quantidade": 1, "valor": 4500.00},
+    {"descricao": "Tubo DIN 2440 de 6'", "quantidade": 1, "valor": 370.00},
+    {"descricao": "Relatorio de Avaliação Hidrogeologica e Projeto construtivo", "quantidade": 1, "valor": 2000.00},
+    {"descricao": "ART de Perfuração", "quantidade": 1, "valor": 1000.00}
+]
+
+forma_pagamento = [
+    {"descricao": "30% de entrada mais 3x boleto", "quantidade": 1, "valor": 3500.00},
+    {"descricao": "50% de ebtrada e mais 10x cartão sem juros", "quantidade": 1, "valor": 4500.00},
+    {"descricao": "50% de entrada mais 4x no boleto", "quantidade": 1, "valor": 370.00}
 ]
 
 modelo_perfuracao = [
@@ -100,50 +126,139 @@ modelo_orcamento = [
     {'valorPerfurado': 76}
 ]
 
-def dadosPerf():
+def gerarJson_geral():
 
-    # 1# verificar se o orçamento será apenas perfuração ou perfuração e materiais
+    orcamento = copy.deepcopy(modelo_json)
+    # ---------nome----------
+    orcamento["cliente"]["nome"] = "João da Silva"
+    orcamento["cliente"]["cidade"] = "Atibaia"
+    orcamento["cliente"]["local"] = "Sítio Boa Vista"
+    # ---------nome----------
 
+    estrutura = 'padrao'
+    valoPergurado = 130
+
+    # ----------prospeccao-----------
+    prospecaescolhida = "Prospecção geofísica e geológica"
+
+    orcamento["prospeccao"].append(copy.deepcopy(prospeccao))
+    for item in prospeccao:
+        
+        if item["descricao"] == prospecaescolhida:
+            selected_itens["prospeccao"] = copy.deepcopy(item)
+    
+    # ----------prospeccao-----------
+
+
+    # ----------perfuração-----------
+
+    item_perf = (math.ceil(valoPergurado/50) +2) 
+
+    # print(f'itens a ser adcionado: {item_perf}')
+    for item in modelo_perfuracao[:item_perf]:
+        orcamento["perfuracao"].append(copy.deepcopy(item))
+        selected_itens["perfuracao"].append(copy.deepcopy(item))
+
+    # ----------perfuração-----------
+
+
+    # ---------revestimento----------
+
+    revestimentoescolhido = "T5ubo geomecanico 4"
+
+    orcamento["revestimento"].append(copy.deepcopy(revestimento))
+    for item in revestimento:
+        
+        if item["descricao"] == revestimentoescolhido:
+            selected_itens["revestimento"] = copy.deepcopy(item)
+
+    
+    # ---------revestimento----------
+
+    apenasPerfuração = False
+
+    # ---------materiais----------
     if apenasPerfuração == True:
-        print(f'orçamento de perfuração')
+        print(f'orçamento de perfuração apenas')
     else:
+        
+        for item in modelo_itens_equipamentos:
+            orcamento["equipamentos"] = copy.deepcopy(modelo_itens_equipamentos)
+
+            
+            # if item["descricao"] == revestimentoescolhido:
+            #     selected_itens["revestimento"] = copy.deepcopy(item)
+
         print(f'orçamento de perfuração e materiais ')
+    # ---------materiais----------
 
 
-    # 2# coletar quantidade perfurada e fzer a divisão de acordo com regras próprias
+    orcamento["documentacao"].append(copy.deepcopy(documentacao))
 
-    if modelo_orcamento[0] >= 50:
-        print("slave")
+    
 
-        # calcular divisoes por valor e adcionar ao orçamento, usando sempre um divisor de 10
-    else:
-        return f'valor minimo de orçamento é 50 metros'
+    with open("dados.json", "w") as file:
+        json.dump(orcamento, file)
 
-    # 3# verificar revestimento utilizado e calcular valor, e se for apenas perfuração já gerar PDF´
+    itens_selecionados()
+    print("lala")
 
-    if apenasPerfuração == True:
-        print(f'orçamento de perfuração')
+def itens_selecionados():
+
+    with open("selecionados.json", "w") as file:
+        json.dump(selected_itens, file)
+    print("lala")
+ 
+
+# # def dadosPerf():
+
+#     # 1# verificar se o orçamento será apenas perfuração ou perfuração e materiais
+
+#     if apenasPerfuração == True:
+#         print(f'orçamento de perfuração')
+#     else:
+#         print(f'orçamento de perfuração e materiais ')
+
+
+#     # 2# coletar quantidade perfurada e fzer a divisão de acordo com regras próprias
+
+#         valoPergurado = 130
+#     if valoPergurado >= 50:
+
+#         # ----------perfuração-----------
+
+        # item_perf = (math.ceil(valoPergurado/50) +2) 
+
+        # # print(f'itens a ser adcionado: {item_perf}')
+        # for item in modelo_perfuracao[:item_perf]:
+        #     orcamento["perfuracao"].append(copy.deepcopy(item))
+
+# ----------perfuração-----------
+#     else:
+#         return f'valor minimo de orçamento é 50 metros'
+
+#     # 3# verificar revestimento utilizado e calcular valor, e se for apenas perfuração já gerar PDF´
+
+#    revestimentoescolhido = "T5ubo geomecanico 4"
 
 
 
-        return gerarPDF()
+#     # #4.1 se materias não estiver incluso, calcular valor individual de materiais
 
-    # #4.1 se materias não estiver incluso, calcular valor individual de materiais
+#     if apenasPerfuração == True:
+#         print(f'orçamento de perfuração')
 
-    if apenasPerfuração == True:
-        print(f'orçamento de perfuração')
+#         return gerarPDF()
 
-        return gerarPDF()
+#     # #4.2 se materiais incluso incrementar valor do metro perfurado
 
-    # #4.2 se materiais incluso incrementar valor do metro perfurado
+#     # #5 se houver demanda de alteração de valor em especifico, realiza-la
 
-    # #5 se houver demanda de alteração de valor em especifico, realiza-la
+#     # #6 Verificar itens auxiliares e adcionar ao Orçamento
 
-    # #6 Verificar itens auxiliares e adcionar ao Orçamento
+#     # #7 gerar PDF de orçamento e retornar ao Telegram
 
-    # #7 gerar PDF de orçamento e retornar ao Telegram
-
-    gerarPDF()
+#     gerarPDF()
 
 def gerarPDF(trabalho, tipo):
     if tipo == "Simples":
@@ -155,69 +270,5 @@ def gerarPDF(trabalho, tipo):
         
     return f"Salve"
 
-orcamento = copy.deepcopy(modelo_json)
-# ---------nome----------
-orcamento["cliente"]["nome"] = "João da Silva"
-orcamento["cliente"]["cidade"] = "Atibaia"
-orcamento["cliente"]["local"] = "Sítio Boa Vista"
-# ---------nome----------
 
-estrutura = 'padrao'
-valoPergurado = 130
-
-item_perf = (math.ceil(valoPergurado/50) +2) 
-
-# print(f'itens a ser adcionado: {item_perf}')
-for item in modelo_perfuracao[:item_perf]:
-    orcamento["perfuracao"].append(copy.deepcopy(item))
-
-# ---------estrutura----------
-
-if estrutura in modelo_estrutura:
-    for item in modelo_estrutura[estrutura]:
-        item_estr = copy.deepcopy(modelo_item)
-        item_estr["descricao"] = item["descricao"]
-        item_estr["quantidade"] = item["quantidade"](valoPergurado)
-        item_estr["valor"] = item["valor"]
-        orcamento["estrutura"].append(item_estr)
-else:
-    print("⚠️ Tipo de estrutura desconhecido:", estrutura)
-
-# ---------estrutura----------
-
-
-# ---------equipamento----------
-
-# equipamentos: = modelo_equipamento e cada item recebe modelo_itens_equipamentos que recebe modelo_item
-
-if valoPergurado <= 60:
-    profundidade = 60
-else:
-    profundidade = math.ceil(valoPergurado / 50) * 50  
-
-if profundidade in modelo_equipamento:
-    for nome_item in modelo_itens_equipamentos:
-        item = copy.deepcopy(modelo_item)
-        item["descricao"] = nome_item
-        item["quantidade"] = 1  # ou algum valor padrão se quiser
-        
-        modelo_equipamento[profundidade].append(item)
-else:
-     print("⚠️ Tipo de profundidade não suportada :", profundidade)
-
-for chave in list(modelo_equipamento):
-    if modelo_equipamento[chave] == []:
-        modelo_equipamento.pop(chave)
-        print(f"Profundidade {chave} removida")
-
-        
-orcamento["equipamentos"].append(copy.deepcopy(modelo_equipamento))
-
-# Visualizar
-
-
-print(modelo_equipamento)
-
-
-with open("dados.json", "w") as file:
-    json.dump(orcamento, file)
+gerarJson_geral()
