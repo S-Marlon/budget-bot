@@ -1,5 +1,13 @@
-topicos = ["Prospeccao","Perfuracao","Estrutura","equipamentos","Instalação","Documentação","Extras"]
 
+topicos = ["prospeccao","Perfuracao","revestimento","equipamentos","Instalação","documentacao","Extras"]
+// equip = ["Bomba","Tampa de poço","Painel","Cabos el\u00e9tricos submersos","V\u00e1lvula de reten\u00e7\u00e3o","V\u00e1lvula de reten\u00e7\u00e3o","Corda Submersa","Hidr\u00f4metro","Cimenta\u00e7\u00e3o"]
+// const modeloItensEquipamentos = {
+//   "Bomba": { "descricao": "Bomba 2cv", "quantidade": 1, "valor": 1500.00 },
+//   "Tampa de poço": { "descricao": "Tampa de PVC", "quantidade": 1, "valor": 250.00 },
+//   "Painel": { "descricao": "Painel de controle", "quantidade": 1, "valor": 300.00 }
+//   // ... e assim por diante
+// };
+un = 1
 document.addEventListener('DOMContentLoaded', async function() {
     await fetch('../budget/dados.json')
         .then(response => response.json())
@@ -8,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.log("antes do for "+ Object.keys(data));
              for (let key in data) {
                 if (Array.isArray(data[key])) {
-                    console.log("a chave é" + key);
+                    console.log("a chave é " + key);
                     
                     // Exemplo: monta id da tabela igual ao nome da key
                     const tabela = document.getElementById(key + '-tabela');
@@ -16,16 +24,46 @@ document.addEventListener('DOMContentLoaded', async function() {
                     const tbody = tabela.getElementsByTagName('tbody')[0];
                     tbody.innerHTML = '';
                     data[key].forEach((item, idx) => {
+                        if (key === "equipamentos") {
+                            var um = 1;
+                            // Itera sobre cada chave dentro do objeto 'item' (ex: "Bomba")
+                            for (const nomeEquipamento in item) {
+                                // Acessa o objeto de detalhes do equipamento (ex: { descricao: "...", ... })
+                                const detalhesEquipamento = item[nomeEquipamento];
+
+                                console.log("equipamento: " + nomeEquipamento);
+                                console.log("equipamento.descricao: " + detalhesEquipamento.descricao);
+                                
+                                const tr = document.createElement('tr');
+
+                                tr.innerHTML = `
+                                    <td style="width: 8%;">${((um + idx) / 10) + un}</td>
+                                    <td style="width: 42%;">${detalhesEquipamento.descricao ?? '-'}</td>
+                                    <td style="width: 15%;">${detalhesEquipamento.quantidade ?? '-'}</td>
+                                    <td style="width: 15%;">${detalhesEquipamento.valor ?? '-'}</td>
+                                    <td style="width: 20%;" class="total">${detalhesEquipamento.valor * detalhesEquipamento.quantidade ?? '-'}</td>
+                                `;
+
+                                tbody.appendChild(tr);
+                                um++;
+                            }
+                        } else if (key === "equipamentos" &&  nomeEquipamento in item === null) {
+                            log("Item é nulo, não adicionando à tabelaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                        } else {
+
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td style="width: 8%;">${idx + 1}</td>
+                            <td style="width: 8%;">${((1 +  idx)/10) + un}</td>
                             <td style="width: 42%;">${item.descricao ?? '-'}</td>
                             <td style="width: 15%;">${item.quantidade ?? '-'}</td>
                             <td style="width: 15%;">${item.valor ?? '-'}</td>
                             <td style="width: 20%;" class="total">${item.valor * item.quantidade ?? '-'}</td>
                         `;
                         tbody.appendChild(tr);
+                        }
+                       
                     });
+                    un++
                 }
             }
 

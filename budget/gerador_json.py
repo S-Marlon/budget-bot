@@ -19,15 +19,13 @@ modelo_json = {
 
 selected_itens = copy.deepcopy(modelo_json)
 
-print(f'selected_itens: {selected_itens}')
- 
 modelo_item = {
-    "descricao": "",
+    "descricao": "a definier",
     "quantidade": 0,
-    "valor": 0
+    "valor": 0.0
 }
 
-modelo_itens_equipamentos = [
+modelo_nomes_equipamentos = [
     "Bomba",
     "Tampa de poço",
     "Painel",
@@ -37,6 +35,8 @@ modelo_itens_equipamentos = [
     "Hidrômetro",
     "Cimentação"
 ]
+modelo_itens_equipamentos = {}
+moloka = []
 
 prospeccao = [
     {"descricao": "Prospecção geofísica", "quantidade": 1, "valor": 1500.00},
@@ -57,7 +57,7 @@ revestimento = [
 documentacao = [
     {"descricao": "Requerimento de dispensa de Outorga ", "quantidade": 1, "valor": 3500.00},
     {"descricao": "Requerimento de Outorga", "quantidade": 1, "valor": 4500.00},
-    {"descricao": "Tubo DIN 2440 de 6'", "quantidade": 1, "valor": 370.00},
+    
     {"descricao": "Relatorio de Avaliação Hidrogeologica e Projeto construtivo", "quantidade": 1, "valor": 2000.00},
     {"descricao": "ART de Perfuração", "quantidade": 1, "valor": 1000.00}
 ]
@@ -106,21 +106,6 @@ modelo_perfuracao = [
     }
 ]
 
-modelo_estrutura = {
-    "simples": [
-        {"descricao": "Tubo pvc 6'", "quantidade": lambda m: math.ceil(m / 6), "valor": 80},
-        {"descricao": "Tubo pvc 1'", "quantidade": lambda m: math.ceil(m / 6), "valor": 30}
-    ],
-    "padrao": [
-        {"descricao": "Tubo aço 6'", "quantidade": lambda m: 6, "valor": 300},
-        {"descricao": "Tubo pvc 1'", "quantidade": lambda m: math.ceil(m / 6), "valor": 30}
-    ],
-    "reforcada": [
-        {"descricao": "Tubo aço 6'", "quantidade": lambda m: 6, "valor": 300},
-        {"descricao": "Tubo aço 1'", "quantidade": lambda m: math.ceil(m / 6), "valor": 90}
-    ]
-}
-
 
 modelo_orcamento = [
     {'valorPerfurado': 76}
@@ -141,11 +126,13 @@ def gerarJson_geral():
     # ----------prospeccao-----------
     prospecaescolhida = "Prospecção geofísica e geológica"
 
-    orcamento["prospeccao"].append(copy.deepcopy(prospeccao))
     for item in prospeccao:
+        orcamento["prospeccao"].append(copy.deepcopy(item))
         
         if item["descricao"] == prospecaescolhida:
             selected_itens["prospeccao"] = copy.deepcopy(item)
+
+    
     
     # ----------prospeccao-----------
 
@@ -166,35 +153,58 @@ def gerarJson_geral():
 
     revestimentoescolhido = "T5ubo geomecanico 4"
 
-    orcamento["revestimento"].append(copy.deepcopy(revestimento))
     for item in revestimento:
+        orcamento["revestimento"].append(copy.deepcopy(item))
         
         if item["descricao"] == revestimentoescolhido:
             selected_itens["revestimento"] = copy.deepcopy(item)
 
     
     # ---------revestimento----------
+    for item_nome in modelo_nomes_equipamentos:
+    # Agora sim, você pode usar item_nome (string) como CHAVE de um dicionário
+        modelo_itens_equipamentos[item_nome] = copy.deepcopy(modelo_item)
 
     apenasPerfuração = False
 
     # ---------materiais----------
     if apenasPerfuração == True:
-        print(f'orçamento de perfuração apenas')
+        print(f'Orçamento de perfuração apenas.')
     else:
+
         
-        for item in modelo_itens_equipamentos:
-            orcamento["equipamentos"] = copy.deepcopy(modelo_itens_equipamentos)
+        # Atribua o dicionário completo de equipamentos ao orçamento
+        orcamento["equipamentos"] = [copy.deepcopy(modelo_itens_equipamentos)]
+        
 
-            
-            # if item["descricao"] == revestimentoescolhido:
-            #     selected_itens["revestimento"] = copy.deepcopy(item)
+       # Para acessar e modificar os itens, agora você precisa especificar o índice da lista (nesse caso, 0).
+        orcamento["equipamentos"][0]["Bomba"]["descricao"] = "Bomba Submersa 2cv"
+        orcamento["equipamentos"][0]["Bomba"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Bomba"]["valor"] = 1500.00
 
-        print(f'orçamento de perfuração e materiais ')
+        orcamento["equipamentos"][0]["Tampa de poço"]["descricao"] = "Tampa de PVC"
+        orcamento["equipamentos"][0]["Tampa de poço"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Tampa de poço"]["valor"] = 200.00
+
+        orcamento["equipamentos"][0]["Painel"]["descricao"] = "Painel Multesio"
+        orcamento["equipamentos"][0]["Painel"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Painel"]["valor"] = 600.00
+        
+
+        print(f'Orçamento de perfuração e materiais.')
     # ---------materiais----------
 
 
-    orcamento["documentacao"].append(copy.deepcopy(documentacao))
+    # ---------documentacao----------
+    for item in documentacao:
+        orcamento["documentacao"].append(copy.deepcopy(item))
+        
+        if item["descricao"] == revestimentoescolhido:
+            selected_itens["documentacao"] = copy.deepcopy(item)
 
+    # ---------documentacao----------
+    # ---------forma_pagamento----------
+    
     
 
     with open("dados.json", "w") as file:
@@ -214,10 +224,6 @@ def itens_selecionados():
 
 #     # 1# verificar se o orçamento será apenas perfuração ou perfuração e materiais
 
-#     if apenasPerfuração == True:
-#         print(f'orçamento de perfuração')
-#     else:
-#         print(f'orçamento de perfuração e materiais ')
 
 
 #     # 2# coletar quantidade perfurada e fzer a divisão de acordo com regras próprias
@@ -260,15 +266,9 @@ def itens_selecionados():
 
 #     gerarPDF()
 
-def gerarPDF(trabalho, tipo):
-    if tipo == "Simples":
-        json.prospeccao.quantidade = 0
-        json.perfuracao = []
-        json.estrutura = []
-        json.equipamentos = []
-        json.documentacao = []
-        
-    return f"Salve"
+def gerarPDF( ):
+        # disparar um gatilho para gerador_pdf.py gerar PDF
+    return f"gerando PDF com os dados do orçamento..."
 
 
 gerarJson_geral()

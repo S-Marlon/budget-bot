@@ -8,6 +8,8 @@
       font-family: Arial, sans-serif;
       font-size: 14px;
       margin: 40px;
+      margin-left: 70px;
+      margin-right: 70px;
       color: #333;
     }
     h1, h2 {
@@ -79,7 +81,7 @@
 </table>
 
   <div class="section-title">Tubulação e Estrutura</div>
-  <table id="estrutura-tabela">
+  <table id="revestimento-tabela">
 <tbody>
     <!-- Linhas serão inseridas aqui pelo JS -->
   </tbody>
@@ -101,29 +103,35 @@
   </tbody>
   </table>
 
-  <div class="section-title">Extras</div>
+  <!-- <div class="section-title"> SERVIÇOS COMPLEMENTARES</div>
    
- <div class="section-title">Instalação</div>
   <ul>
     <li>✓ Instalação completa dos equipamentos</li>
     <li>✓ Testes de vazão e funcionamento</li>
     <li>✓ Aterramento elétrico de segurança</li>
-  </ul>
-
-  <ul>
+ 
     <li>✓ Reservatório: {{ extras.reservatorio }}</li>
     <li>✓ Placa de sinalização</li>
   </ul>
-
+ -->
+  <table style="background-color: lightblue;">
+ 
+                                   
+    <td style="width: 70%;">Total estimado para Perfuração de X metros: </td>
+    <td style="width: 30%; text-align: right;"><strong id="valor_calculado">R$ [valor calculado]</strong></td>
+  </table>
   <div class="section-title">Condições Comerciais</div>
-  <ul>
+  <fieldset>
+  
+  <ol>
     <li><strong>Forma de Pagamento:</strong> {{ pagamento.forma }} ({{ pagamento.entrada }}, {{ pagamento.parcelas }})</li>
+    <li><strong>Data de início:</strong> {{ condicoes.validade_proposta }}</li>
     <li><strong>Prazo de Execução:</strong> {{ condicoes.prazo_execucao }}</li>
     <li><strong>Validade da Proposta:</strong> {{ condicoes.validade_proposta }}</li>
-  </ul>
-
-  <p class="total">Total estimado: <strong id="valor_calculado">R$ [valor calculado]</strong></p>
-
+  </ol>
+  </fieldset>
+  
+ 
   <p><em>* Este é um orçamento estimado, sujeito a confirmação técnica no local.</em></p>
 
   <script src="js/script.js"></script>
