@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <title>Orçamento de Perfuração</title>
   <style>
+    * {
+      font-family:'oswald', 'Times New Roman', Times, serif , Arial ,sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      
       font-size: 14px;
       margin: 40px;
       margin-left: 70px;
@@ -32,7 +36,7 @@
       
     }
     .section-title {
-      background-color: #e6f0ff;
+      background-color: #9cbbea;
       padding: 6px;
       font-weight: bold;
       
@@ -43,23 +47,58 @@
       text-align: right;
       
     }
+
+
   </style>
 </head>
 <body>
 
-  <h1>Orçamento de Perfuração de Poço</h1>
+  <h1>MAC SONDA<br> Poços artesianos</h1>
+<hr>
+  <h2>Orçamento para Perfuração de Poço Artesiano</h2>
+  <div style="display: inline-grid;grid-template-columns: auto auto ; width: 100%;">
 
-  <p><strong>Cliente:</strong> <span id="cliente-nome"></span><br>
-  <strong>Local:</strong><span id="cliente-local"></span></p>
+    <div style="text-align: left;" >
+      <p><strong>Cliente:</strong> <span id="cliente-nome"></span><p>
+      <strong>Local:</strong><span id="cliente-local"></span></p>
+    </div>
+
+    <div style="text-align: right;">
+      <p><strong>Data:</strong> __/__/____</p>
+      <p><strong>Validade da Proposta:</strong> 7 dias</p>
+    </div>
+  </div>
+  
+  <strong>Localização:</strong><span id="cliente-local"></span></p>
+  
+  <fieldset >
+    
+   
+      Orçamento para perfuração de poço artesiano de até 60 metros, incluindo todos os serviços necessários para a conclusão do projeto.
+      <p>Este orçamento inclui:</p>
+
+      <table style="width:100%; font-size: small; ">
+        <tr >
+          <td style=" border: none;">✓ Prospecção geofísica e geológica</td>
+          <td style=" border: none;">✓ Perfuração do poço artesiano</td> 
+          <td style=" border: none;">✓ Instalação de tubulação e estrutura</td>
+          <td style=" border: none;">✓ Documentação necessária</td>
+        </tr>
+      </table>
+
+      
+  </fieldset>
+
+  
 
   <table id="tabela">
   <thead>
     <tr>
       <th style="width: 8%;">Item</th>
       <th style="width: 42%;">Descrição</th>
-      <th style="width: 15%;">Quantidade</th>
+      <th style="width: 18%;">Quantidade (medida)</th>
       <th style="width: 15%;">Valor (R$)</th>
-      <th style="width: 20%;">Valor  Total(R$)</th>
+      <th style="width: 17%;">Valor  Total(R$)</th>
     </tr>
   </thead>
   <tbody>
@@ -125,15 +164,19 @@
   
   <ol>
     <li><strong>Forma de Pagamento:</strong> {{ pagamento.forma }} ({{ pagamento.entrada }}, {{ pagamento.parcelas }})</li>
-    <li><strong>Data de início:</strong> {{ condicoes.validade_proposta }}</li>
-    <li><strong>Prazo de Execução:</strong> {{ condicoes.prazo_execucao }}</li>
-    <li><strong>Validade da Proposta:</strong> {{ condicoes.validade_proposta }}</li>
+    <li><strong>Data de início:</strong> á Combinar</li>
+    <li><strong>Prazo de Execução:</strong> 7 dias </li>
+    <li><strong>Validade da Proposta:</strong> 7 dias </li>
   </ol>
   </fieldset>
   
  
-  <p><em>* Este é um orçamento estimado, sujeito a confirmação técnica no local.</em></p>
 
+  <fieldset style="border-top: none; color:red;"><em>* Este é um orçamento estimado, sujeito a confirmação técnica no local.</em></fieldset>
+  <fieldset style="border-top: none; color:red;"><em>Obs.: O valor total refere-se à perfuração de até 60 metros. Caso ultrapasse essa metragem, será cobrado um valor adicional de R$ 280,00 por metro excedente.</em></fieldset>
+<fieldset>
+    <p>*Este orçamento é um orçamento preliminar de execução de serviço. o documento oficial será gerado apos a confirmação do cliente e será anexado ao contrato*</p>
+  </fieldset>
   <script src="js/script.js"></script>
 
 </body>

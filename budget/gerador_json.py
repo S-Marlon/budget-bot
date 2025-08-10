@@ -3,6 +3,7 @@ import copy
 import math
 
 apenasPerfuração = bool
+valoPergurado = 200
 
 modelo_json = {
     "cliente": {
@@ -36,7 +37,7 @@ modelo_nomes_equipamentos = [
     "Cimentação"
 ]
 modelo_itens_equipamentos = {}
-moloka = []
+
 
 prospeccao = [
     {"descricao": "Prospecção geofísica", "quantidade": 1, "valor": 1500.00},
@@ -121,7 +122,7 @@ def gerarJson_geral():
     # ---------nome----------
 
     estrutura = 'padrao'
-    valoPergurado = 130
+    
 
     # ----------prospeccao-----------
     prospecaescolhida = "Prospecção geofísica e geológica"

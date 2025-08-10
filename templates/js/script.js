@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     await fetch('../budget/dados.json')
         .then(response => response.json())
         .then(data => {
-
+ 
             console.log("antes do for "+ Object.keys(data));
              for (let key in data) {
                 if (Array.isArray(data[key])) {
@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                     if (!tabela) continue; // pula se não existir tabela para essa key
                     const tbody = tabela.getElementsByTagName('tbody')[0];
                     tbody.innerHTML = '';
+                   
                     data[key].forEach((item, idx) => {
+                        
                         if (key === "equipamentos") {
                             var um = 1;
                             // Itera sobre cada chave dentro do objeto 'item' (ex: "Bomba")
@@ -39,30 +41,54 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 tr.innerHTML = `
                                     <td style="width: 8%;">${((um + idx) / 10) + un}</td>
                                     <td style="width: 42%;">${detalhesEquipamento.descricao ?? '-'}</td>
-                                    <td style="width: 15%;">${detalhesEquipamento.quantidade ?? '-'}</td>
+                                    <td style="width: 17%;">${detalhesEquipamento.quantidade ?? '-'}</td>
                                     <td style="width: 15%;">${detalhesEquipamento.valor ?? '-'}</td>
-                                    <td style="width: 20%;" class="total">${detalhesEquipamento.valor * detalhesEquipamento.quantidade ?? '-'}</td>
+                                    <td style="width: 18%;" class="total">${detalhesEquipamento.valor * detalhesEquipamento.quantidade ?? '-'}</td>
                                 `;
-
+                                
+                                
+                                if (um % 2 === 0) {
+                                    tr.style.backgroundColor = "#f5f5f5";
+                                }else{
+                                    tr.style.backgroundColor = "white";
+                                }
                                 tbody.appendChild(tr);
+                                
+                                console.log("um: " +um)
                                 um++;
                             }
+                            
                         } else if (key === "equipamentos" &&  nomeEquipamento in item === null) {
                             log("Item é nulo, não adicionando à tabelaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                         } else {
-
+                        
                         const tr = document.createElement('tr');
+                        var medida = 'unidade';
+                            if (key === "perfuracao") {
+                            medida = 'metro';
+                            }
+                            if (item.quantidade > 1){
+                                medida = 'unidades';
+                            }
+
                         tr.innerHTML = `
                             <td style="width: 8%;">${((1 +  idx)/10) + un}</td>
                             <td style="width: 42%;">${item.descricao ?? '-'}</td>
-                            <td style="width: 15%;">${item.quantidade ?? '-'}</td>
+                            <td style="width: 18%;">${item.quantidade ?? '-'} (${medida})</td>
                             <td style="width: 15%;">${item.valor ?? '-'}</td>
-                            <td style="width: 20%;" class="total">${item.valor * item.quantidade ?? '-'}</td>
+                            <td style="width: 17%;" class="total">${item.valor * item.quantidade ?? '-'}</td>
                         `;
+                        var result = (1 +  idx) % 2
+                        console.log("result: " + result)
+                        if (result === 0) {
+                                    tr.style.backgroundColor = "#f5f5f5";
+                                }else{
+                                    tr.style.backgroundColor = "white";
+                                }
                         tbody.appendChild(tr);
                         }
-                       
                     });
+                    
                     un++
                 }
             }
