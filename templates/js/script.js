@@ -1,13 +1,45 @@
+// if (data selecionada === null, entao adcionar data do dict, se nao adcionar a data personalizada)
+
+var currentdate = new Date()
+document.querySelector('.data').textContent = 
+currentdate.getDate() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear()
+
+// if (localização selecionada === null, entao adcionar data do dcit, se nao adcionar a localização personalizada)
+
+document.querySelector('.localizacao').textContent = currentdate.getDate() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear()
+
+// if (checks no dicrt, entao aparecer a respectiva, se nao dar um display.vlock/ ocultar )
+// document.querySelector('.localizacao').textContent = 
+
+// atribui qtd metros perfurados
+metrosPerfurados = 12345
+
+document.getElementsByClassName("#valorPerfurado").textContent = metrosPerfurados
+
+checks = [{'obj':'ahjk,mjksd'},{'obj':'asasdamnhujhgyujhyujhyujdsd'},{"obj":'adsdsa'},{"obj":'adsdsa'}]
+
+ if (checks != null){
+    const tabela = document.getElementById('checks');
+    var n = 0
+    checks.forEach(e => {
+            const td = document.createElement('td');
+            
+            var valor = 100/checks.length
+            
+            // verificar quantidade de objetos em checks, atualmente apenas da undefined
+            // dividir igualmente
+            td.style.width = `${valor}%` 
+            
+            td.innerHTML = `<span> <strong>✓</strong> ${checks[n].obj} </span> `
+            tabela.appendChild(td);
+            n++
+        });
+ }
 
 topicos = ["prospeccao","Perfuracao","revestimento","equipamentos","Instalação","documentacao","Extras"]
-// equip = ["Bomba","Tampa de poço","Painel","Cabos el\u00e9tricos submersos","V\u00e1lvula de reten\u00e7\u00e3o","V\u00e1lvula de reten\u00e7\u00e3o","Corda Submersa","Hidr\u00f4metro","Cimenta\u00e7\u00e3o"]
-// const modeloItensEquipamentos = {
-//   "Bomba": { "descricao": "Bomba 2cv", "quantidade": 1, "valor": 1500.00 },
-//   "Tampa de poço": { "descricao": "Tampa de PVC", "quantidade": 1, "valor": 250.00 },
-//   "Painel": { "descricao": "Painel de controle", "quantidade": 1, "valor": 300.00 }
-//   // ... e assim por diante
-// };
+
 un = 1
+let incluso = true
 document.addEventListener('DOMContentLoaded', async function() {
     await fetch('../budget/dados.json')
         .then(response => response.json())
@@ -38,14 +70,29 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 
                                 const tr = document.createElement('tr');
 
-                                tr.innerHTML = `
+                                if (incluso == true) {
+                                    console.log("incluso é true");
+                                    
+                                     tr.innerHTML = `
                                     <td style="width: 8%;">${((um + idx) / 10) + un}</td>
-                                    <td style="width: 42%;">${detalhesEquipamento.descricao ?? '-'}</td>
-                                    <td style="width: 17%;">${detalhesEquipamento.quantidade ?? '-'}</td>
-                                    <td style="width: 15%;">${detalhesEquipamento.valor ?? '-'}</td>
-                                    <td style="width: 18%;" class="total">${detalhesEquipamento.valor * detalhesEquipamento.quantidade ?? '-'}</td>
+                                    <td style="width: 42%;" class="descricao">${detalhesEquipamento.descricao ?? '-'}</td>
+                                    <td style="width: 18%;">${detalhesEquipamento.quantidade ?? '-'}</td>
+                                    <td style="width: 15%;">R$ ${detalhesEquipamento.valor ?? '-'}</td>
+                                    <td style="width: 8.5%;" class="total" ><del>R$ ${detalhesEquipamento.valor * detalhesEquipamento.quantidade ?? '-'}</del></td>
+                                    <td style="width: 8.5%;" class="totalincluso"><ins>INCLUSO<ins></td>
                                 `;
-                                
+                                }else{
+                                    console.log("incluso é Façse");
+
+                                    tr.innerHTML = `
+                                    <td style="width: 8%;">${((um + idx) / 10) + un}</td>
+                                    <td style="width: 42%;" class="descricao">${detalhesEquipamento.descricao ?? '-'}</td>
+                                    <td style="width: 18%;">R$ ${detalhesEquipamento.quantidade ?? '-'}</td>
+                                    <td style="width: 15%;">R$ ${detalhesEquipamento.valor ?? '-'}</td>
+                                    <td style="width: 17%;" class="total">${detalhesEquipamento.valor * detalhesEquipamento.quantidade ?? '-'}</td>
+                                `;
+                                }
+
                                 
                                 if (um % 2 === 0) {
                                     tr.style.backgroundColor = "#f5f5f5";
@@ -73,10 +120,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                         tr.innerHTML = `
                             <td style="width: 8%;">${((1 +  idx)/10) + un}</td>
-                            <td style="width: 42%;">${item.descricao ?? '-'}</td>
+                            <td style="width: 42%;" class="descricao">${item.descricao ?? '-'}</td>
                             <td style="width: 18%;">${item.quantidade ?? '-'} (${medida})</td>
-                            <td style="width: 15%;">${item.valor ?? '-'}</td>
-                            <td style="width: 17%;" class="total">${item.valor * item.quantidade ?? '-'}</td>
+                            <td style="width: 15%;">R$ ${item.valor ?? '-'}</td>
+                            <td style="width: 17%;" class="total">R$ ${item.valor * item.quantidade ?? '-'}</td>
                         `;
                         var result = (1 +  idx) % 2
                         console.log("result: " + result)
@@ -107,96 +154,3 @@ document.querySelectorAll(".total").forEach(e =>{
 document.querySelector("#valor_calculado").textContent = somaTotal
 }
    
-
-
-
-
-
-        // // const budgetList = document.getElementById('budget-list');
-        
-        // //     const listItem = document.createElement('li');
-        // //     listItem.textContent = `${data.cliente.nome}: ${data.cliente.cidade} o brab`;
-        // //     budgetList.appendChild(listItem);
-
-        //     document.getElementById("cliente-nome").textContent = data.cliente.nome;
-        //     document.getElementById("cliente-local").textContent = data.cliente.local + " - " + data.cliente.cidade;
-        //     for(let key in data.prospeccao){
-
-        //         if (data.prospeccao[key] == true) {
-        //             console.log("Visita Técnica está marcada como true");
-        //                 const listItem = document.createElement('li');
-        //                 listItem.textContent = `✓ v${key.replace(/_/g, ' ')}`;
-        //                 document.getElementById("listagem").appendChild(listItem).style.textTransform = "capitalize";
-        //         }
-        //     }
-
-
-        //     // perfuração
-        //         const listItem = document.createElement('td');
-        //         listItem.textContent = `${data.perfuração.metros_perfuração} m`;
-        //         document.getElementById("perfuração").appendChild(listItem);
-                
-        //         const priceItem = document.createElement('td');
-        //         priceItem.textContent = `R$ ${data.perfuração.preco_por_metro}`;
-        //         document.getElementById("perfuração").appendChild(priceItem);
-                
-        //         const totalItem = document.createElement('td');
-        //         totalItem.textContent = `R$ ${data.perfuração.metros_perfuração * data.perfuração.preco_por_metro}`;
-        //         document.getElementById("perfuração").appendChild(totalItem);
-
-        //         if (data.perfuração.uso_martelo_fundo == true) {
-        //             const marteloItem = document.createElement('tr');
-        //             marteloItem.innerHTML = '<td colspan="4">* perfuração com uso de Martelo de Fundo (DTH)</td>';
-        //             document.querySelector('table').appendChild(marteloItem);
-        //         } else{
-        //             const marteloItem = document.createElement('tr');
-        //             marteloItem.innerHTML = '<td colspan="4">* perfuração com uso de Bomba de lama</td>';
-        //             document.querySelector('table').appendChild(marteloItem);
-        //         }
-        //     // perfuração
-
-        //     // tubulação 
-            
-        //     const tubulacao_diametroItem = document.createElement('td');
-        //         tubulacao_diametroItem.textContent = `${data.estrutura_poco.tubulacao_diametro} `;
-        //         document.getElementById("estrutura").appendChild(tubulacao_diametroItem);
-                
-        //         const tubulacao_metrosItem = document.createElement('td');
-        //         const metrosOriginal = data.perfuração.metros_perfuração;
-        //         const metrosArredondado = Math.ceil(metrosOriginal / 6) * 6;
-        //         tubulacao_metrosItem.textContent = ` ${metrosArredondado} m`;
-        //         document.getElementById("estrutura").appendChild(tubulacao_metrosItem);
-                
-        //         const valor_tuboItem = document.createElement('td');
-        //         let valor_tubo = 150; // Valor unitário do tubo
-        //         valor_tuboItem.textContent = `R$ ${valor_tubo}`;
-        //         document.getElementById("estrutura").appendChild(valor_tuboItem);
-
-        //         const filtro_fundoItem = document.createElement('td');
-        //         filtro_fundoItem.textContent = `R$ ${(metrosArredondado/6) * valor_tubo}`;
-        //         document.getElementById("estrutura").appendChild(filtro_fundoItem);
-
-        //     // tubulação 
-        //     // equipamentos
-
-        //         const BombaItem = document.createElement('td');
-        //         BombaItem.textContent = ` Bomba submersa ${data.equipamentos.bomba_submersa.potencia_cv} Hp`;
-        //         document.getElementById("bomba").appendChild(BombaItem);
-
-        //         const calor = document.createElement('td');
-        //         calor.textContent = ` R$ ${900}`;
-        //         document.getElementById("bomba").appendChild(calor);
-
-        //         const calor2 = document.createElement('td');
-        //         calor2.textContent = `R$ ${900}`;
-        //         document.getElementById("bomba").appendChild(calor2);
-                
-        //         const calo32 = document.createElement('td');
-        //         calo32.textContent = `R$ ${900}`;
-        //         document.getElementById("painel").appendChild(calo32);
-
-        //     // equipamentos
-
-
-               
-            

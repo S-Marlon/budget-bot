@@ -15,7 +15,7 @@ import os
 
 perfuracao_keywords = ['perfuracao','poço']
 estrutura_keywords = ['estrutura','cano', 'tubo', 'revestimento', 'revestido']
-tipo_keywords = ['simples','padrao','grande']
+tipo_keywords = ['simples','complexo']
 
 keyboard = [
     ['💧 Solicitar orçamento'],
@@ -58,15 +58,14 @@ async def responder(update: Update, context: ContextTypes.DEFAULT_TYPE):
     mensagem = unidecode(mensagem.lower())
     for keyword in tipo_keywords:
         
-        if keyword in mensagem:
-            if keyword == "simples":
+        if keyword.lower() in mensagem.lower():
+            if keyword.lower() == "simples":
                 await update.message.reply_text(f"Aqui está um orçamento de poço {keyword}")
+
                 
-            if keyword == "padrao":
+            if keyword.lower() == "completo":
                 await update.message.reply_text(f"Aqui está um orçamento de poço {keyword}")
-            if keyword == "grande":
-                await update.message.reply_text(f"Aqui está um orçamento de poço {keyword}")
-    
+            
 
 async def pdf(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # --- CORREÇÃO AQUI ---

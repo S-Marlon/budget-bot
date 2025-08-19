@@ -27,10 +27,33 @@
     }
     th, td {
       border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
+      padding: 4px;
+      text-align: center;
       
     }
+
+    /* table */
+    table#checks{
+      width:100%;
+      font-size: small; 
+     
+    }
+
+    table#checks td {
+      border:black 1px solid;
+    }
+
+    table#checks td span{
+      background-color: green;
+      padding-inline: 20px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      border-radius: 3px;
+      color: white; 
+    }
+    /* table */
+
+
     th {
       background-color: #f0f0f0;
       
@@ -41,10 +64,23 @@
       font-weight: bold;
       
     }
+    
+    .descricao {
+      text-align: left;
+    }
     .total {
-      font-size: 16px;
+      font-size: 10pt;
       font-weight: bold;
       text-align: right;
+      
+      
+    }
+    .totalincluso {
+      font-size: 10pt;
+      font-weight: bold;
+      text-align:center;
+      color:darkgreen; 
+      font-weight: bolder;
       
     }
 
@@ -53,8 +89,7 @@
 </head>
 <body>
 
-  <h1>MAC SONDA<br> Poços artesianos</h1>
-<hr>
+
   <h2>Orçamento para Perfuração de Poço Artesiano</h2>
   <div style="display: inline-grid;grid-template-columns: auto auto ; width: 100%;">
 
@@ -64,25 +99,27 @@
     </div>
 
     <div style="text-align: right;">
-      <p><strong>Data:</strong> __/__/____</p>
+      <p ><strong>Data:</strong> <span class="data">__/__/____</span></p>
       <p><strong>Validade da Proposta:</strong> 7 dias</p>
     </div>
   </div>
   
-  <strong>Localização:</strong><span id="cliente-local"></span></p>
+  <strong>Localização:</strong><span class="localizacao"></span></p>
   
   <fieldset >
     
    
-      Orçamento para perfuração de poço artesiano de até 60 metros, incluindo todos os serviços necessários para a conclusão do projeto.
+      Orçamento para perfuração de poço artesiano de até <span class="valorPerfurado"> X</span> metros, incluindo todos os serviços necessários para a conclusão do projeto.
       <p>Este orçamento inclui:</p>
 
-      <table style="width:100%; font-size: small; ">
-        <tr >
-          <td style=" border: none;">✓ Prospecção geofísica e geológica</td>
-          <td style=" border: none;">✓ Perfuração do poço artesiano</td> 
-          <td style=" border: none;">✓ Instalação de tubulação e estrutura</td>
-          <td style=" border: none;">✓ Documentação necessária</td>
+      <table id="checks" >
+        
+        <tr>
+          
+          <!-- <td><span><strong>✓</strong></span> Prospecção geofísica e geológica</td>
+          <td><span><strong>✓</strong></span>Perfuração do poço artesiano</td>
+          <td><span><strong>✓</strong></span> Instalação de tubulação e estrutura</td>
+          <td><span><strong>✓</strong></span> Documentação necessária</td> -->
         </tr>
       </table>
 
@@ -156,7 +193,7 @@
   <table style="background-color: lightblue;">
  
                                    
-    <td style="width: 70%;">Total estimado para Perfuração de X metros: </td>
+    <td style="width: 70%;">Total estimado para Perfuração de <span id="valorPerfurado">X</span> metros: </td>
     <td style="width: 30%; text-align: right;"><strong id="valor_calculado">R$ [valor calculado]</strong></td>
   </table>
   <div class="section-title">Condições Comerciais</div>
@@ -173,7 +210,7 @@
  
 
   <fieldset style="border-top: none; color:red;"><em>* Este é um orçamento estimado, sujeito a confirmação técnica no local.</em></fieldset>
-  <fieldset style="border-top: none; color:red;"><em>Obs.: O valor total refere-se à perfuração de até 60 metros. Caso ultrapasse essa metragem, será cobrado um valor adicional de R$ 280,00 por metro excedente.</em></fieldset>
+  <fieldset style="border-top: none; color:red;"><em>Obs.: O valor total refere-se à perfuração de até <span id="valorPerfurado">X</span> metros. Caso ultrapasse essa metragem, será cobrado um valor adicional de R$ 280,00 por metro excedente.</em></fieldset>
 <fieldset>
     <p>*Este orçamento é um orçamento preliminar de execução de serviço. o documento oficial será gerado apos a confirmação do cliente e será anexado ao contrato*</p>
   </fieldset>

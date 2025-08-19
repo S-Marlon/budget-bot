@@ -41,6 +41,32 @@ keywords = {
   }
 }
 
+def tipoBudget(tipo):
+   match tipo:
+        case 'simples':
+            # se for simples não mostrar prospecção e documentação
+
+            # Se tiver dados do cliente adcionar, se nao tiver ignorar
+
+            # Add perfuracao escolhida
+            # Add revestimento escolhida
+            # Add materiais escolhida
+            # Add forma de pagamento escolhida
+
+            # verificar se é materiais incluso
+
+
+            # acionar o geradorPDF()
+
+
+            return "Bad request"
+        case 'complexo':
+            # se for complexo mostrar Todos os campos e valores
+            return "Not found"
+        # If an exact match is not confirmed, this last case will be used if provided
+        case _:
+            return "error"
+    
 
 
 def detectar_verbo(mensagem):

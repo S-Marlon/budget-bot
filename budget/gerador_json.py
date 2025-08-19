@@ -1,187 +1,115 @@
 import json
 import copy
 import math
+from dicts import *
+
 
 apenasPerfuração = bool
-valoPergurado = 200
-
-modelo_json = {
-    "cliente": {
-        "nome": "",
-        "cidade": "",
-        "local": ""
-    },
-    "prospeccao": [],
-    "perfuracao": [],
-    "revestimento": [],
-    "equipamentos": [],
-    "documentacao": []
-}
-
-selected_itens = copy.deepcopy(modelo_json)
-
-modelo_item = {
-    "descricao": "a definier",
-    "quantidade": 0,
-    "valor": 0.0
-}
-
-modelo_nomes_equipamentos = [
-    "Bomba",
-    "Tampa de poço",
-    "Painel",
-    "Cabos elétricos submersos",
-    "Válvula de retenção",
-    "Corda Submersa",
-    "Hidrômetro",
-    "Cimentação"
-]
-modelo_itens_equipamentos = {}
+ES_valoPerfurar = 60
 
 
-prospeccao = [
-    {"descricao": "Prospecção geofísica", "quantidade": 1, "valor": 1500.00},
-    {"descricao": "Prospecção geológica", "quantidade": 1, "valor": 2000.00},
-    {"descricao": "Prospecção hidrogeológica", "quantidade": 1, "valor": 2500.00},
-    {"descricao": "Prospecção geofísica e geológica", "quantidade": 1, "valor": 3000.00}
-]
-
-revestimento = [
-    {"descricao": "T1ubo de 10 1/4", "quantidade": 10, "valor": 1450.00},
-    {"descricao": "T2ubo galvanizado á fogo de 6", "quantidade": 10, "valor": 490.00},
-    {"descricao": "T3ubo DIN 2440 de 6", "quantidade": 10, "valor": 370.00},
-    {"descricao": "T4ubo geomecanico 5", "quantidade": 5, "valor": 350.00},
-    {"descricao": "T5ubo geomecanico 4", "quantidade": 5, "valor": 310.00}
-]
-
-
-documentacao = [
-    {"descricao": "Requerimento de dispensa de Outorga ", "quantidade": 1, "valor": 3500.00},
-    {"descricao": "Requerimento de Outorga", "quantidade": 1, "valor": 4500.00},
-    
-    {"descricao": "Relatorio de Avaliação Hidrogeologica e Projeto construtivo", "quantidade": 1, "valor": 2000.00},
-    {"descricao": "ART de Perfuração", "quantidade": 1, "valor": 1000.00}
-]
-
-forma_pagamento = [
-    {"descricao": "30% de entrada mais 3x boleto", "quantidade": 1, "valor": 3500.00},
-    {"descricao": "50% de ebtrada e mais 10x cartão sem juros", "quantidade": 1, "valor": 4500.00},
-    {"descricao": "50% de entrada mais 4x no boleto", "quantidade": 1, "valor": 370.00}
-]
-
-modelo_perfuracao = [
-    {
-      "descricao": "Perfuração 6\" em sedimento - de 00 a 32 m",
-      "quantidade": 32,
-      "valor": 250
-    },
-    {
-      "descricao": "Perfuração 6\" em rocha sã - de 32 a 40 m",
-      "quantidade": 8,
-      "valor": 235
-    },
-    {
-      "descricao": "Perfuração 6\" em rocha sã - de 40 a 60 m",
-      "quantidade": 8,
-      "valor": 235
-    },
-    {
-      "descricao": "Perfuração 6\" em rocha sã - de 60 a 100 m",
-      "quantidade": 60,
-      "valor": 200
-    },
-    {
-      "descricao": "Perfuração 4\" em rocha sã - de 100 a 150 m",
-      "quantidade": 50,
-      "valor": 195
-    },
-    {
-      "descricao": "Perfuração 4\" em rocha sã - de 150 a 200 m",
-      "quantidade": 50,
-      "valor": 195
-    },
-    {
-      "descricao": "Perfuração 4\" em rocha sã - de 200 a 250 m",
-      "quantidade": 50,
-      "valor": 195
-    }
-]
-
-
-modelo_orcamento = [
-    {'valorPerfurado': 76}
-]
 
 def gerarJson_geral():
 
     orcamento = copy.deepcopy(modelo_json)
+
+
+    # 1# coletar e delegar os dados do usuario
     # ---------nome----------
     orcamento["cliente"]["nome"] = "João da Silva"
     orcamento["cliente"]["cidade"] = "Atibaia"
     orcamento["cliente"]["local"] = "Sítio Boa Vista"
     # ---------nome----------
 
-    estrutura = 'padrao'
-    
-
+    # 2# coletar e delegar prospeccao selecionada
     # ----------prospeccao-----------
-    prospecaescolhida = "Prospecção geofísica e geológica"
-
+    prospecaescolhida = ["1","2"]
+        
+    n = -1
     for item in prospeccao:
+        n + 1
         orcamento["prospeccao"].append(copy.deepcopy(item))
         
-        if item["descricao"] == prospecaescolhida:
-            selected_itens["prospeccao"] = copy.deepcopy(item)
+        if item["descricao"] in prospecaescolhida:
+            selected_itens["prospeccao"].append(copy.deepcopy(item))
+            selected_itens["prospeccao"][n]["quantidade"] = 1
+
 
     
     
     # ----------prospeccao-----------
 
 
-    # ----------perfuração-----------
+    # 3# coletar e delegar perfuracao quantidade e valor da perfuração
+    # 3# verificar revestimento utilizado e calcular valor, e se for apenas perfuração já gerar PDF´
 
-    item_perf = (math.ceil(valoPergurado/50) +2) 
+    # ----------perfuração-----------
+    apenasPerf = False
+
+    item_perf = (math.ceil(ES_valoPerfurar/50) +1) 
+
+    n = -1
+    if apenasPerf == True:
+        print(f'Orçamento de perfuração apenas.')
+        valorAdcional = 100
+
+        for item in modelo_perfuracao[:item_perf]:
+            n +1
+            orcamento["perfuracao"].append(copy.deepcopy(item))
+            orcamento["perfuracao"][n]["valor"] += valorAdcional
+
+
+    else:
+        print(f'Orçamento de perfuração e materiais.')
+        valorAdcional = -50
+
+        for item in modelo_perfuracao[:item_perf]:
+            n +1
+            orcamento["perfuracao"].append(copy.deepcopy(item))
+            orcamento["perfuracao"][n]["valor"] += valorAdcional
 
     # print(f'itens a ser adcionado: {item_perf}')
-    for item in modelo_perfuracao[:item_perf]:
-        orcamento["perfuracao"].append(copy.deepcopy(item))
-        selected_itens["perfuracao"].append(copy.deepcopy(item))
+  
+         
 
     # ----------perfuração-----------
 
 
     # ---------revestimento----------
 
-    revestimentoescolhido = "T5ubo geomecanico 4"
-
+    revestimentoescolhido = ["Tubo geomecanico 4"]
+ 
+    n = -1
     for item in revestimento:
+        n + 1
         orcamento["revestimento"].append(copy.deepcopy(item))
         
-        if item["descricao"] == revestimentoescolhido:
-            selected_itens["revestimento"] = copy.deepcopy(item)
+        if item["descricao"] in revestimentoescolhido:
+            selected_itens["revestimento"].append(copy.deepcopy(item))
+            selected_itens["revestimento"][n]["quantidade"] = 9
 
     
     # ---------revestimento----------
+
+
     for item_nome in modelo_nomes_equipamentos:
     # Agora sim, você pode usar item_nome (string) como CHAVE de um dicionário
+        
         modelo_itens_equipamentos[item_nome] = copy.deepcopy(modelo_item)
 
-    apenasPerfuração = False
 
     # ---------materiais----------
-    if apenasPerfuração == True:
-        print(f'Orçamento de perfuração apenas.')
-    else:
 
-        
+    if apenasPerf == True:
+        print(f'Orçamento de perfuração apenas.')
         # Atribua o dicionário completo de equipamentos ao orçamento
         orcamento["equipamentos"] = [copy.deepcopy(modelo_itens_equipamentos)]
         
 
        # Para acessar e modificar os itens, agora você precisa especificar o índice da lista (nesse caso, 0).
-        orcamento["equipamentos"][0]["Bomba"]["descricao"] = "Bomba Submersa 2cv"
+        orcamento["equipamentos"][0]["Bomba"]["descricao"] = "Bomba Submersa"
         orcamento["equipamentos"][0]["Bomba"]["quantidade"] = 1
-        orcamento["equipamentos"][0]["Bomba"]["valor"] = 1500.00
+        orcamento["equipamentos"][0]["Bomba"]["valor"] = "1800.00"
 
         orcamento["equipamentos"][0]["Tampa de poço"]["descricao"] = "Tampa de PVC"
         orcamento["equipamentos"][0]["Tampa de poço"]["quantidade"] = 1
@@ -190,6 +118,69 @@ def gerarJson_geral():
         orcamento["equipamentos"][0]["Painel"]["descricao"] = "Painel Multesio"
         orcamento["equipamentos"][0]["Painel"]["quantidade"] = 1
         orcamento["equipamentos"][0]["Painel"]["valor"] = 600.00
+
+        orcamento["equipamentos"][0]["Cabos elétricos submersos"]["descricao"] = "Cabos eletricos"
+        orcamento["equipamentos"][0]["Cabos elétricos submersos"]["quantidade"] = 60
+        orcamento["equipamentos"][0]["Cabos elétricos submersos"]["valor"] = 6.00
+
+        orcamento["equipamentos"][0]["Válvula de retenção"]["descricao"] = "Válvula de retenção"
+        orcamento["equipamentos"][0]["Válvula de retenção"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Válvula de retenção"]["valor"] = 60.00
+        
+        orcamento["equipamentos"][0]["Hidrômetro"]["descricao"] = "Hidrômetro"
+        orcamento["equipamentos"][0]["Hidrômetro"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Hidrômetro"]["valor"] = 160.00
+
+        
+        orcamento["equipamentos"][0]["Cimentação"]["descricao"] = "Cimentação espaço anular"
+        orcamento["equipamentos"][0]["Cimentação"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Cimentação"]["valor"] = 400.00
+
+        orcamento["equipamentos"][0]["Corda Submersa"]["descricao"] = "Corda Submersa"
+        orcamento["equipamentos"][0]["Corda Submersa"]["quantidade"] = 60
+        orcamento["equipamentos"][0]["Corda Submersa"]["valor"] = 1.40
+    else:
+
+        
+        # Atribua o dicionário completo de equipamentos ao orçamento
+        orcamento["equipamentos"] = [copy.deepcopy(modelo_itens_equipamentos)]
+        
+
+       # Para acessar e modificar os itens, agora você precisa especificar o índice da lista (nesse caso, 0).
+        orcamento["equipamentos"][0]["Bomba"]["descricao"] = "Bomba Submersa"
+        orcamento["equipamentos"][0]["Bomba"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Bomba"]["valor"] = 1800.00
+
+        orcamento["equipamentos"][0]["Tampa de poço"]["descricao"] = "Tampa de PVC"
+        orcamento["equipamentos"][0]["Tampa de poço"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Tampa de poço"]["valor"] = 200.00
+
+        orcamento["equipamentos"][0]["Painel"]["descricao"] = "Painel Multesio"
+        orcamento["equipamentos"][0]["Painel"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Painel"]["valor"] = 600.00
+
+        orcamento["equipamentos"][0]["Cabos elétricos submersos"]["descricao"] = "Cabos eletricos"
+        orcamento["equipamentos"][0]["Cabos elétricos submersos"]["quantidade"] = 60
+        orcamento["equipamentos"][0]["Cabos elétricos submersos"]["valor"] = 6.00
+
+        orcamento["equipamentos"][0]["Válvula de retenção"]["descricao"] = "Válvula de retenção"
+        orcamento["equipamentos"][0]["Válvula de retenção"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Válvula de retenção"]["valor"] = 60.00
+        
+        orcamento["equipamentos"][0]["Hidrômetro"]["descricao"] = "Hidrômetro"
+        orcamento["equipamentos"][0]["Hidrômetro"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Hidrômetro"]["valor"] = 160.00
+
+        
+        orcamento["equipamentos"][0]["Cimentação"]["descricao"] = "Cimentação espaço anular"
+        orcamento["equipamentos"][0]["Cimentação"]["quantidade"] = 1
+        orcamento["equipamentos"][0]["Cimentação"]["valor"] = 400.00
+
+        orcamento["equipamentos"][0]["Corda Submersa"]["descricao"] = "Corda Submersa"
+        orcamento["equipamentos"][0]["Corda Submersa"]["quantidade"] = 60
+        orcamento["equipamentos"][0]["Corda Submersa"]["valor"] = 1.40
+
+
         
 
         print(f'Orçamento de perfuração e materiais.')
@@ -197,11 +188,17 @@ def gerarJson_geral():
 
 
     # ---------documentacao----------
+    documentacaoescolhido = ["Requerimento de dispensa de Outorga"]
+
+    n = -1
     for item in documentacao:
+        n + 1
         orcamento["documentacao"].append(copy.deepcopy(item))
-        
-        if item["descricao"] == revestimentoescolhido:
-            selected_itens["documentacao"] = copy.deepcopy(item)
+
+        if item["descricao"] in documentacaoescolhido:
+            selected_itens["documentacao"].append(copy.deepcopy(item))
+            selected_itens["documentacao"][n]["quantidade"] = 1
+
 
     # ---------documentacao----------
     # ---------forma_pagamento----------
