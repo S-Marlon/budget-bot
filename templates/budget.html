@@ -10,15 +10,15 @@
 
     body {
       
-      font-size: 14px;
+      font-size: 12px;
       margin: 40px;
-      margin-left: 70px;
-      margin-right: 70px;
+      margin-left: 1in;
+      margin-right: 1in;
       color: #333;
     }
     h1, h2 {
       text-align: center;
-      color: #004080;
+      color: #405E90;
     }
     table {
       width: 100%;
@@ -32,15 +32,20 @@
       
     }
 
+    thead tr th{
+      background-color: #405E90;
+      color:white;
+    }
+
     /* table */
     table#checks{
       width:100%;
-      font-size: small; 
+      font-size: 8px; 
      
     }
 
     table#checks td {
-      border:black 1px solid;
+      border:none
     }
 
     table#checks td span{
@@ -59,7 +64,7 @@
       
     }
     .section-title {
-      background-color: #9cbbea;
+      background-color: #B1D0FF;
       padding: 6px;
       font-weight: bold;
       
@@ -90,6 +95,10 @@
 <body>
 
 
+  <h1>
+    <image width="150px" height="50px" src="https://imgs.search.brave.com/AYLAp8f-WRr-C29xqYvxmNLBcWhvR8-6b6IQ4WVTlBs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAyLzk3LzMyLzc5/LzM2MF9GXzI5NzMy/Nzk4NV9oSEVPUFVJ/WmZqYmtieGF6eUFy/dXl4UkgyZlgyUDR1/dy5qcGc"> </image>
+    Mac Sonda Poços Artesianos
+    </h1>
   <h2>Orçamento para Perfuração de Poço Artesiano</h2>
   <div style="display: inline-grid;grid-template-columns: auto auto ; width: 100%;">
 
@@ -190,30 +199,37 @@
     <li>✓ Placa de sinalização</li>
   </ul>
  -->
-  <table style="background-color: lightblue;">
+  <table style="background-color: white;">
  
                                    
-    <td style="width: 70%;">Total estimado para Perfuração de <span id="valorPerfurado">X</span> metros: </td>
-    <td style="width: 30%; text-align: right;"><strong id="valor_calculado">R$ [valor calculado]</strong></td>
+    <td style="width: 80%;">Total estimado para Perfuração de <span id="valorPerfurado">X</span> metros: </td>
+    <td style="width: 20%; text-align: right;"><strong id="valor_calculado">R$ [valor calculado]</strong></td>
   </table>
   <div class="section-title">Condições Comerciais</div>
   <fieldset>
   
-  <ol>
-    <li><strong>Forma de Pagamento:</strong> {{ pagamento.forma }} ({{ pagamento.entrada }}, {{ pagamento.parcelas }})</li>
-    <li><strong>Data de início:</strong> á Combinar</li>
-    <li><strong>Prazo de Execução:</strong> 7 dias </li>
-    <li><strong>Validade da Proposta:</strong> 7 dias </li>
+  <ol id="condicoes-pagamento">
+    
   </ol>
   </fieldset>
   
  
+<div id="miudas">
 
-  <fieldset style="border-top: none; color:red;"><em>* Este é um orçamento estimado, sujeito a confirmação técnica no local.</em></fieldset>
-  <fieldset style="border-top: none; color:red;"><em>Obs.: O valor total refere-se à perfuração de até <span id="valorPerfurado">X</span> metros. Caso ultrapasse essa metragem, será cobrado um valor adicional de R$ 280,00 por metro excedente.</em></fieldset>
-<fieldset>
-    <p>*Este orçamento é um orçamento preliminar de execução de serviço. o documento oficial será gerado apos a confirmação do cliente e será anexado ao contrato*</p>
-  </fieldset>
+</div>
+
+<!-- <p>Observações:</p>
+  <ul>
+   
+    <li>✓ O valor total pode variar conforme as condições do terreno e necessidades específicas do cliente.</li>
+    <li>✓ Quaisquer serviços adicionais ou alterações no escopo do projeto serão discutidos e orçados separadamente.</li>
+    <li>✓ A empresa reserva-se o direito de ajustar os preços em caso de variações significativas nos custos dos materiais ou mão de obra.</li>
+    <li>✓ Todos os serviços serão realizados em conformidade com as normas técnicas e ambientais vigentes.</li>
+  </ul>
+  <p>Agradecemos a oportunidade de apresentar este orçamento e estamos à disposição para quaisquer esclarecimentos ou ajustes necessários.</p> -->
+  <p>Atenciosamente,</p>
+  <p><strong>Mac Sonda poços Artesianos</strong></p>
+  <p><strong>(11) 96904-6879</strong></p>
   <script src="js/script.js"></script>
 
 </body>
